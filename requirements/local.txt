@@ -1,0 +1,32 @@
+-r base.txt
+
+# Fejlesztői eszközök
+Werkzeug[watchdog]
+ipdb
+psycopg2
+watchfiles
+
+# Tesztelés
+mypy
+django-stubs
+pytest
+pytest-sugar
+pytest-cov
+pytest-django
+factory-boy
+
+# Kódminőség és linting
+flake8
+flake8-isort
+coverage
+black
+pylint-django
+pylint-celery
+pre-commit
+gunicorn
+
+# Django-specifikus eszközök
+django-debug-toolbar
+django-coverage-plugin
+django-extensions
+django-import-export

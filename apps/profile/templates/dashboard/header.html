@@ -1,0 +1,33 @@
+<div class="nk-block-head">
+  <div class="nk-block-between g-3">
+    <div class="nk-block-head-content d-flex align-items-center">
+      <div class="user-avatar sq lg me-3 {% if not user.profile.get_profile_image_url %}bg-primary{% endif %}"
+            style="{% if user.profile.get_profile_image_url %}background: none;{% endif %}">
+      {% if user.profile.get_profile_image_url %}
+          <img src="{{ user.profile.get_profile_image_url }}" alt="Profile Image">
+      {% else %}
+          <span>NA</span>
+      {% endif %}
+      </div>
+
+      <div>
+        <h3 class="nk-block-title page-title"><strong class="text-primary small">{{user}}</strong></h3>
+        <div class="nk-block-des text-soft">
+          <ul class="list-inline">
+            <li>User ID: <span class="text-base">{{ user.formatted_id }}</span></li>
+            <li>Last Login: <span class="text-base">{{ user.last_login|date:"Y-m-d H:i:s" }}</span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <!-- TODO -->
+    <div class="nk-block-head-content">
+      <a href="{% url 'profile' %}" class="btn btn-outline-light bg-white d-none d-sm-inline-flex"><em
+          class="icon ni ni-chat"></em><span>Message with XYZ</span></a>
+      <a href="{% url 'profile' %}" class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none"><em
+          class="icon ni ni-chat"></em></a>
+    </div>
+  </div>
+</div>
+

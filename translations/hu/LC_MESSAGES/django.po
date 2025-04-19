@@ -1,0 +1,779 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-16 10:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: apps/accounts/forms.py:19
+msgid "User type"
+msgstr ""
+
+#: apps/accounts/forms.py:24
+msgid "preferred language"
+msgstr ""
+
+#: apps/accounts/forms.py:50
+msgid "Email"
+msgstr ""
+
+#: apps/accounts/forms.py:56
+msgid "First name"
+msgstr ""
+
+#: apps/accounts/forms.py:57
+msgid "Last name"
+msgstr ""
+
+#: apps/accounts/forms.py:59
+msgid "Password"
+msgstr ""
+
+#: apps/accounts/forms.py:65
+msgid "Password (again)"
+msgstr ""
+
+#: apps/accounts/forms.py:83
+msgid "You must type the same password each time."
+msgstr ""
+
+#: apps/accounts/models.py:17 apps/accounts/models.py:27
+msgid "Employee"
+msgstr ""
+
+#: apps/accounts/models.py:18 apps/accounts/models.py:26
+msgid "Company"
+msgstr ""
+
+#: apps/accounts/models.py:19 apps/accounts/models.py:25
+msgid "Freelancer"
+msgstr ""
+
+#: apps/accounts/models.py:23
+msgid "Administrator"
+msgstr ""
+
+#: apps/accounts/models.py:24
+msgid "Company employee"
+msgstr ""
+
+#: apps/accounts/models.py:34 apps/accounts/models.py:69
+msgid "email address"
+msgstr ""
+
+#: apps/accounts/models.py:84
+msgid "Cannot invite yourself."
+msgstr ""
+
+#: apps/accounts/templates/account/base_reauthenticate.html:34
+msgid "Please reauthenticate to safeguard your account."
+msgstr ""
+
+#: apps/accounts/templates/account/base_reauthenticate.html:41
+msgid "Alternative options"
+msgstr ""
+
+#: apps/accounts/templates/account/email.html:37
+msgid "The following email addresses are associated with your account:"
+msgstr ""
+
+#: apps/accounts/templates/account/email.html:49
+msgid "Verified"
+msgstr ""
+
+#: apps/accounts/templates/account/email.html:53
+msgid "Unverified"
+msgstr ""
+
+#: apps/accounts/templates/account/email.html:58
+msgid "Primary"
+msgstr ""
+
+#: apps/accounts/templates/account/email.html:67
+msgid "Make Primary"
+msgstr ""
+
+#: apps/accounts/templates/account/email.html:68
+msgid "Re-send Verification"
+msgstr ""
+
+#: apps/accounts/templates/account/email.html:69
+msgid "Remove"
+msgstr ""
+
+#: apps/accounts/templates/account/email.html:83
+msgid "Add Email"
+msgstr ""
+
+#: apps/accounts/templates/account/email.html:99
+msgid "Do you really want to remove the selected email address?"
+msgstr ""
+
+#: apps/accounts/templates/account/email_confirm.html:39
+#, python-format
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email "
+"address for user %(user_display)s."
+msgstr ""
+
+#: apps/accounts/templates/account/email_confirm.html:45
+#: apps/accounts/templates/account/reauthenticate.html:20
+msgid "Confirm"
+msgstr ""
+
+#: apps/accounts/templates/account/email_confirm.html:50
+#, python-format
+msgid ""
+"Unable to confirm %(email)s because it is already confirmed by a different "
+"account."
+msgstr ""
+
+#: apps/accounts/templates/account/email_confirm.html:56
+#, python-format
+msgid ""
+"This email confirmation link expired or is invalid. Please <a href="
+"\"%(email_url)s\">issue a new email confirmation request</a>."
+msgstr ""
+
+#: apps/accounts/templates/account/reauthenticate.html:6
+msgid "Enter your password:"
+msgstr ""
+
+#: apps/accounts/validators.py:12
+msgid "User already exists with this email address."
+msgstr ""
+
+#: apps/accounts/views.py:26
+#, python-brace-format
+msgid "Invitation successfully sent to {email}."
+msgstr ""
+
+#: apps/accounts/views.py:56
+msgid "Invitation accepted."
+msgstr ""
+
+#: apps/blog/forms.py:16 apps/blog/forms.py:33 apps/blog/forms.py:45
+msgid "title"
+msgstr ""
+
+#: apps/blog/forms.py:17
+msgid "lead"
+msgstr ""
+
+#: apps/blog/forms.py:18
+msgid "text"
+msgstr ""
+
+#: apps/blog/forms.py:19
+msgid "category"
+msgstr ""
+
+#: apps/blog/forms.py:20
+msgid "tags"
+msgstr ""
+
+#: apps/blog/forms.py:21
+msgid "is_published"
+msgstr ""
+
+#: apps/core/choices.py:6 apps/core/choices.py:25
+msgid "A1"
+msgstr ""
+
+#: apps/core/choices.py:7
+msgid "A2"
+msgstr ""
+
+#: apps/core/choices.py:8
+msgid "B1"
+msgstr ""
+
+#: apps/core/choices.py:9
+msgid "B2"
+msgstr ""
+
+#: apps/core/choices.py:10 apps/core/choices.py:26
+msgid "C1"
+msgstr ""
+
+#: apps/core/choices.py:11
+msgid "C2"
+msgstr ""
+
+#: apps/core/choices.py:15
+msgid "hungarian"
+msgstr ""
+
+#: apps/core/choices.py:16
+msgid "english"
+msgstr ""
+
+#: apps/core/choices.py:17
+msgid "german"
+msgstr ""
+
+#: apps/core/choices.py:18
+msgid "dutch"
+msgstr ""
+
+#: apps/core/choices.py:22
+msgid "B"
+msgstr ""
+
+#: apps/core/choices.py:23
+msgid "BE"
+msgstr ""
+
+#: apps/core/choices.py:24
+msgid "A"
+msgstr ""
+
+#: apps/core/choices.py:27
+msgid "C1E"
+msgstr ""
+
+#: apps/core/choices.py:28
+msgid "CE"
+msgstr ""
+
+#: apps/core/choices.py:29
+msgid "D1"
+msgstr ""
+
+#: apps/core/choices.py:30
+msgid "D1E"
+msgstr ""
+
+#: apps/core/choices.py:31
+msgid "D"
+msgstr ""
+
+#: apps/core/choices.py:32
+msgid "DE"
+msgstr ""
+
+#: apps/core/choices.py:36
+msgid "Full time"
+msgstr ""
+
+#: apps/core/choices.py:37
+msgid "Part time"
+msgstr ""
+
+#: apps/core/choices.py:38
+msgid "Remote work"
+msgstr ""
+
+#: apps/core/choices.py:39
+msgid "Home office"
+msgstr ""
+
+#: apps/core/choices.py:40
+msgid "Casual"
+msgstr ""
+
+#: apps/core/choices.py:41
+msgid "Professional practice"
+msgstr ""
+
+#: apps/core/choices.py:42
+msgid "Student work"
+msgstr ""
+
+#: apps/core/choices.py:45
+msgid "For mother and / or single parents"
+msgstr ""
+
+#: apps/core/choices.py:49
+msgid "In pension, work next to retired"
+msgstr ""
+
+#: apps/core/choices.py:53
+msgid "For changed employment capacity"
+msgstr ""
+
+#: apps/core/choices.py:58
+msgid "GENERAL WORKING SCHEDULE"
+msgstr ""
+
+#: apps/core/choices.py:59
+msgid "2 SHIFTS"
+msgstr ""
+
+#: apps/core/choices.py:60
+msgid "3 SHIFTS"
+msgstr ""
+
+#: apps/core/choices.py:61
+msgid "12/48 SHIFT"
+msgstr ""
+
+#: apps/core/choices.py:62
+msgid "12/24 SHIFT"
+msgstr ""
+
+#: apps/core/choices.py:64
+msgid "24/72 SHIFT, STANDBY SERVICE"
+msgstr ""
+
+#: apps/core/choices.py:66
+msgid "FLEXIBILE"
+msgstr ""
+
+#: apps/core/choices.py:67
+msgid "CONTINUOUS WORKING TIME"
+msgstr ""
+
+#: apps/core/choices.py:68
+msgid "OPTIONAL WORKING HOURS"
+msgstr ""
+
+#: apps/core/choices.py:72
+msgid "Arabic"
+msgstr ""
+
+#: apps/core/choices.py:73
+msgid "Bengali"
+msgstr ""
+
+#: apps/core/choices.py:74
+msgid "Bulgarian"
+msgstr ""
+
+#: apps/core/choices.py:75
+msgid "Chinese"
+msgstr ""
+
+#: apps/core/choices.py:76
+msgid "Croatian"
+msgstr ""
+
+#: apps/core/choices.py:77
+msgid "Czech"
+msgstr ""
+
+#: apps/core/choices.py:78
+msgid "Danish"
+msgstr ""
+
+#: apps/core/choices.py:79
+msgid "Dutch"
+msgstr ""
+
+#: apps/core/choices.py:80
+msgid "English"
+msgstr ""
+
+#: apps/core/choices.py:81
+msgid "Estonian"
+msgstr ""
+
+#: apps/core/choices.py:82
+msgid "Finnish"
+msgstr ""
+
+#: apps/core/choices.py:83
+msgid "French"
+msgstr ""
+
+#: apps/core/choices.py:84
+msgid "German"
+msgstr ""
+
+#: apps/core/choices.py:85
+msgid "Greek"
+msgstr ""
+
+#: apps/core/choices.py:86
+msgid "Hindi"
+msgstr ""
+
+#: apps/core/choices.py:87
+msgid "Hungarian"
+msgstr ""
+
+#: apps/core/choices.py:88
+msgid "Irish"
+msgstr ""
+
+#: apps/core/choices.py:89
+msgid "Italian"
+msgstr ""
+
+#: apps/core/choices.py:90
+msgid "Japanese"
+msgstr ""
+
+#: apps/core/choices.py:91
+msgid "Latvian"
+msgstr ""
+
+#: apps/core/choices.py:92
+msgid "Lithuanian"
+msgstr ""
+
+#: apps/core/choices.py:93
+msgid "Malay"
+msgstr ""
+
+#: apps/core/choices.py:94
+msgid "Maltese"
+msgstr ""
+
+#: apps/core/choices.py:95
+msgid "Polish"
+msgstr ""
+
+#: apps/core/choices.py:96
+msgid "Portuguese"
+msgstr ""
+
+#: apps/core/choices.py:97
+msgid "Punjabi"
+msgstr ""
+
+#: apps/core/choices.py:98
+msgid "Romanian"
+msgstr ""
+
+#: apps/core/choices.py:99
+msgid "Slovak"
+msgstr ""
+
+#: apps/core/choices.py:100
+msgid "Slovenian"
+msgstr ""
+
+#: apps/core/choices.py:101
+msgid "Spanish"
+msgstr ""
+
+#: apps/core/choices.py:102
+msgid "Swedish"
+msgstr ""
+
+#: apps/core/choices.py:103
+msgid "Urdu"
+msgstr ""
+
+#: apps/core/forms.py:14
+msgid "Submit"
+msgstr ""
+
+#: apps/emails.py:12
+msgid "You have been invited to InterHM by ...COMPANY NAME..."
+msgstr ""
+
+#: apps/emails.py:13
+#, python-brace-format
+msgid "Yada yada yada.... {absolute_url}"
+msgstr ""
+
+#: apps/job_post/choices.py:6
+msgid "engineering"
+msgstr "Mérnök"
+
+#: apps/job_post/choices.py:7
+msgid "education"
+msgstr "Oktatás"
+
+#: apps/job_post/choices.py:8
+msgid "construction"
+msgstr "Építőipar"
+
+#: apps/job_post/forms.py:18
+msgid "required language"
+msgstr ""
+
+#: apps/job_post/forms.py:19
+msgid "required language level"
+msgstr ""
+
+#: apps/job_post/forms.py:79
+msgid "is job post active?"
+msgstr ""
+
+#: apps/job_post/forms.py:80 apps/profile/forms.py:187
+msgid "job title"
+msgstr ""
+
+#: apps/job_post/forms.py:81
+msgid "job description"
+msgstr ""
+
+#: apps/job_post/forms.py:82
+msgid "expectations"
+msgstr ""
+
+#: apps/job_post/forms.py:83
+msgid "educations"
+msgstr ""
+
+#: apps/job_post/forms.py:84
+msgid "driving licence"
+msgstr ""
+
+#: apps/job_post/forms.py:85
+msgid "advantages"
+msgstr ""
+
+#: apps/job_post/forms.py:86 apps/job_post/forms.py:109
+#: apps/profile/forms.py:122
+msgid "working time"
+msgstr ""
+
+#: apps/job_post/forms.py:87 apps/job_post/forms.py:110
+#: apps/profile/forms.py:123
+msgid "work schedule"
+msgstr ""
+
+#: apps/job_post/forms.py:88
+msgid "work place address"
+msgstr ""
+
+#: apps/job_post/forms.py:89
+msgid "work place city"
+msgstr ""
+
+#: apps/job_post/forms.py:90
+msgid "work place country"
+msgstr ""
+
+#: apps/job_post/forms.py:91
+msgid "benefits"
+msgstr ""
+
+#: apps/job_post/forms.py:92
+msgid "Is CV required?"
+msgstr ""
+
+#: apps/job_post/forms.py:93
+msgid "Is cover letter required?"
+msgstr ""
+
+#: apps/job_post/forms.py:94 apps/profile/forms.py:114
+msgid "Contact name"
+msgstr ""
+
+#: apps/job_post/forms.py:95
+msgid "Is contact name public?"
+msgstr ""
+
+#: apps/job_post/forms.py:96
+msgid "Contact email"
+msgstr ""
+
+#: apps/job_post/forms.py:97
+msgid "Is contact email public?"
+msgstr ""
+
+#: apps/job_post/forms.py:98
+msgid "Contact phone number"
+msgstr ""
+
+#: apps/job_post/forms.py:99
+msgid "Is contact phone number public?"
+msgstr ""
+
+#: apps/job_post/forms.py:103
+msgid "if checked, the job post will appear on the site"
+msgstr ""
+
+#: apps/job_post/forms.py:104
+msgid "job description, and tasks, projects"
+msgstr ""
+
+#: apps/job_post/forms.py:105
+msgid "enter all important expectations, requirements"
+msgstr ""
+
+#: apps/job_post/forms.py:106
+msgid "which education is obligated to have"
+msgstr ""
+
+#: apps/job_post/forms.py:107
+msgid "which licence must have"
+msgstr ""
+
+#: apps/job_post/forms.py:108
+msgid "enter preferred knowledge, advantages"
+msgstr ""
+
+#: apps/job_post/forms.py:111
+msgid "enter the city, town or postcode"
+msgstr ""
+
+#: apps/job_post/forms.py:112
+msgid "ex. company car"
+msgstr ""
+
+#: apps/job_post/forms.py:114
+msgid "If checked applicants must send CV with the application"
+msgstr ""
+
+#: apps/job_post/forms.py:117
+msgid "If checked applicants must send cover letter with the application"
+msgstr ""
+
+#: apps/job_post/forms.py:127
+msgid "You have reached the active job post quota for you subscription plan!"
+msgstr ""
+
+#: apps/profile/forms.py:39
+msgid "company name"
+msgstr ""
+
+#: apps/profile/forms.py:40
+msgid "company description"
+msgstr ""
+
+#: apps/profile/forms.py:41
+msgid "logo"
+msgstr ""
+
+#: apps/profile/forms.py:42
+msgid "company file"
+msgstr ""
+
+#: apps/profile/forms.py:43
+msgid "contact name and position"
+msgstr ""
+
+#: apps/profile/forms.py:44 apps/profile/forms.py:112
+msgid "phone number"
+msgstr ""
+
+#: apps/profile/forms.py:48 apps/profile/forms.py:128
+msgid "Phone number should be in the format +36301231234"
+msgstr ""
+
+#: apps/profile/forms.py:110
+msgid "Date of birth"
+msgstr ""
+
+#: apps/profile/forms.py:111
+msgid "Is date of birth private"
+msgstr ""
+
+#: apps/profile/forms.py:113
+msgid "Is contact data private"
+msgstr ""
+
+#: apps/profile/forms.py:115
+msgid "city"
+msgstr ""
+
+#: apps/profile/forms.py:116
+msgid "address"
+msgstr ""
+
+#: apps/profile/forms.py:117
+msgid "postcode"
+msgstr ""
+
+#: apps/profile/forms.py:118
+msgid "is address private"
+msgstr ""
+
+#: apps/profile/forms.py:119
+msgid "cover letter"
+msgstr ""
+
+#: apps/profile/forms.py:120
+msgid "CV"
+msgstr ""
+
+#: apps/profile/forms.py:121
+msgid "driving license"
+msgstr ""
+
+#: apps/profile/forms.py:124
+msgid "blocked companies"
+msgstr ""
+
+#: apps/profile/forms.py:130
+msgid ""
+"Companies who's search results will exclude you (ex. your current employer) "
+"and companies who's adverts you won't see"
+msgstr ""
+
+#: apps/profile/forms.py:134 apps/profile/forms.py:155
+msgid "Contact name must be provided if contact details are set to private"
+msgstr ""
+
+#: apps/profile/forms.py:167
+msgid "known language"
+msgstr ""
+
+#: apps/profile/forms.py:168
+msgid "known language level"
+msgstr ""
+
+#: apps/profile/forms.py:186
+msgid "employer name"
+msgstr ""
+
+#: apps/profile/forms.py:188
+msgid "start date"
+msgstr ""
+
+#: apps/profile/forms.py:189
+msgid "end date"
+msgstr ""
+
+#: apps/profile/forms.py:190
+msgid "still there"
+msgstr ""
+
+#: apps/profile/forms.py:191
+msgid "main tasks"
+msgstr ""
+
+#: apps/profile/forms.py:201
+msgid "End date must be larger then start date"
+msgstr ""
+
+#: apps/profile/forms.py:238
+msgid "Base information"
+msgstr ""
+
+#: apps/profile/forms.py:239
+msgid "Your language knowledge"
+msgstr ""
+
+#: apps/profile/forms.py:240
+msgid "Your previous work experiences"
+msgstr ""
+
+#: apps/profile/models.py:46
+msgid "If checked only your username show up in chats"
+msgstr ""
+
+#: apps/profile/models.py:52
+msgid "If checked your address won't show up on your profile page"
+msgstr ""
+
+#: apps/profile/models.py:99
+msgid "Ex. Bachelor's"
+msgstr ""
+
+#: apps/search/filters.py:14 apps/search/filters.py:75
+msgid "Languages known"
+msgstr ""
+
+#: apps/search/filters.py:21 apps/search/filters.py:82
+msgid "Education"
+msgstr ""

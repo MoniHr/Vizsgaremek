@@ -1,0 +1,331 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block aside %}
+{% include 'aside/aside_company.html' with helper=helper filter=filter %}
+{% endblock %}
+
+{% block content %}
+<div class="nk-content-wrap">
+  <div class="nk-block">
+    <div class="row g-gs">
+      <div class="col-12">
+        <p>Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ page_obj.paginator.count }}</p>
+
+        <div class="filter-badge-scroll-wrapper">
+          <ul id="active-filters" class="list-inline mb-3"></ul>
+        </div>
+
+        {% for company in page_obj %}
+        <div class="card card-bordered">
+          <div class="card-inner">
+            <div class="project">
+              <div class="project-head">
+                <a href="{{ company.get_absolute_url }}" class="project-title">
+                  <div class="user-avatar lg sq {% if not company.get_profile_image_url %}bg-primary{% endif %}"
+                    style="{% if company.get_profile_image_url %}background: none;{% endif %}">
+                    {% if company.get_profile_image_url %}
+                    <img src="{{ company.get_profile_image_url }}" alt="Profile Image">
+                    {% else %}
+                    <span>NA</span>
+                    {% endif %}
+                  </div>
+                  <div class="project-info">
+                    <h5 class="title1">{{ company.company_name }}</h5>
+                    <span class="sub-text">{{ company.profile_location }} • {{ company.profile_city }} •
+                      {{company.user.profile.activity}}</span>
+                    <span style="font-size: 11px;"><em class="ni ni-info"></em> Sponsored</span>
+                  </div>
+                </a>
+              </div>
+
+              <div class="project-details">
+                {% for job in company.user.job_posts.all %}
+                <div class="card p-3 border">
+                  <div>
+                    <h6 class="title mb-1">{{ job.title }}</h6>
+                  </div>
+                  <div>
+                    <em class="icon ni ni-folder"></em>
+                    <small>{{ job.category|default:"-" }} > {{ job.sub_category|default:"-" }}</small>
+                  </div>
+                  <div>
+                    <p>{{ job.job_description|truncatewords:20|striptags }}</p>
+                  </div>
+                  <div class="mt-2">
+
+                    <span class="badge badge-dim bg-light text-gray me-1">
+                      <em class="icon ni ni-calendar me-1"></em>
+                      {% if job.working_time.exists %}
+                      {{ job.working_time.all|join:", " }}
+                      {% else %}
+                      -
+                      {% endif %}
+                    </span>
+
+                    <span class="badge badge-dim bg-light text-gray me-1">
+                      <em class="icon ni ni-clock me-1"></em>
+                      {% if job.work_schedule.exists %}
+                      {{ job.work_schedule.all|join:", " }}
+                      {% else %}
+                      -
+                      {% endif %}
+                    </span>
+
+                    {% if job.educations.exists %}
+                    <span class="badge badge-dim bg-light text-gray me-1">
+                      <em class="icon ni ni-book me-1"></em>
+                      {{ job.educations.all|join:", " }}
+                    </span>
+                    {% else %}
+                    <span class="badge badge-dim bg-light me-1">-</span>
+                    {% endif %}
+
+                  </div>
+                  <div class="d-flex mt-1 justify-content-between align-items-center">
+                    <small><em class="icon ni ni-map-pin"></em> {{ job.job_location|default:"-" }},
+                      {{ job.job_city|default:"-" }} • Last updated:
+                      {{job.updated_at}}</small>
+                    <a href="{% url 'job_detail' job.slug %}" class="btn btn-sm btn-primary"><em
+                        class="icon ni ni-eye"></em></a>
+                    </ul>
+                  </div>
+                </div>
+                {% empty %}
+                <p class="sub-text">Nincsenek elérhető pozíciók ennél a cégnél.</p>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        <div class="col-12 mt-4">
+          {% include 'snippets/paginator.html' %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<style>
+  #div_id_profile_location,
+  #div_id_activity,
+  #div_id_sub_activity,
+  #div_id_number_of_worker {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #DBDFEA;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #fff;
+  }
+
+  .filter-badge-scroll-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+
+  #active-filters::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  #active-filters::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+
+  #active-filters li {
+    margin-right: 0.5rem;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 991.98px) {
+    #filterButton {
+      position: fixed;
+      bottom: -8px;
+      left: 0;
+      width: 280px !important;
+      z-index: 1050;
+    }
+
+    @media (min-width: 576px) and (max-width: 991.98px) {
+      #filterButton {
+        width: 300px !important;
+      }
+    }
+
+  }
+</style>
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("#filterForm");
+    const subActivityContainer = document.querySelector("#div_id_sub_activity");
+    const activityCheckboxes = document.querySelectorAll("input[name='activity']");
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedSubActivities = urlParams.getAll("sub_activity");
+    const baseUrl = form.dataset.subactivityUrl;
+
+    const loadedSubActivities = {};
+    const activeActivities = new Set();
+
+    function renderSubActivities() {
+      // 🧹 Töröljük a teljes tartalmat először
+      subActivityContainer.innerHTML = "";
+
+      let validSubActivityIds = new Set();
+      let renderedAny = false;
+
+      activeActivities.forEach((actId) => {
+        const subacts = loadedSubActivities[actId] || [];
+
+        subacts.forEach((subAct) => {
+          validSubActivityIds.add(String(subAct.id));
+          const isChecked = selectedSubActivities.includes(String(subAct.id));
+
+          const label = document.createElement("label");
+          label.classList.add("form-check");
+          label.innerHTML = `
+            <input type="checkbox" name="sub_activity" value="${subAct.id}" class="form-check-input" ${isChecked ? "checked" : ""}>
+            ${subAct.name}
+          `;
+          subActivityContainer.appendChild(label);
+          renderedAny = true;
+        });
+      });
+
+      // 🚫 Ha nincs semmi megjelenítendő
+      if (!renderedAny) {
+        const emptyMsg = document.createElement("div");
+        emptyMsg.classList.add("text-muted", "small", "mt-2");
+        emptyMsg.textContent = "No sub-activities available.";
+        subActivityContainer.appendChild(emptyMsg);
+      }
+    }
+
+    function fetchAndRender(activitiesToLoad) {
+      if (activitiesToLoad.length === 0) {
+        renderSubActivities();
+        return;
+      }
+
+      fetch(`${baseUrl}?activity_ids=${activitiesToLoad.join(",")}`)
+        .then((res) => res.json())
+        .then((data) => {
+          // 🧹 Nullázunk mindent az új fetch előtt
+          activitiesToLoad.forEach(actId => {
+            loadedSubActivities[actId] = [];
+          });
+
+          data.forEach((subAct) => {
+            if (!loadedSubActivities[subAct.activity_id]) {
+              loadedSubActivities[subAct.activity_id] = [];
+            }
+
+            const alreadyExists = loadedSubActivities[subAct.activity_id].some(sa => sa.id === subAct.id);
+            if (!alreadyExists) {
+              loadedSubActivities[subAct.activity_id].push(subAct);
+            }
+          });
+
+          renderSubActivities();
+        });
+    }
+
+    activityCheckboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", function () {
+        const actId = parseInt(checkbox.value);
+
+        if (checkbox.checked) {
+          activeActivities.add(actId);
+          fetchAndRender([actId]);
+        } else {
+          activeActivities.delete(actId);
+          delete loadedSubActivities[actId];
+          renderSubActivities();
+        }
+      });
+    });
+
+    // 🟢 INIT — ha volt valami bejelölve
+    const initialChecked = Array.from(activityCheckboxes)
+      .filter(cb => cb.checked)
+      .map(cb => parseInt(cb.value));
+
+    initialChecked.forEach(id => activeActivities.add(id));
+    fetchAndRender(initialChecked);
+  });
+</script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const filterForm = document.getElementById('filterForm');
+    const badgeContainer = document.getElementById('active-filters');
+
+    function truncateText(text, maxLength = 12) {
+      return text.length > maxLength ? text.slice(0, maxLength) + '…' : text;
+    }
+
+    function updateBadges() {
+      badgeContainer.innerHTML = '';
+
+      const checkedInputs = filterForm.querySelectorAll('input[type="checkbox"]:checked');
+
+      checkedInputs.forEach(input => {
+        const label = filterForm.querySelector('label[for="' + input.id + '"]');
+        const labelText = label ? label.textContent.trim() : input.value;
+
+        const li = document.createElement('li');
+        li.className = 'list-inline-item mb-1';
+
+        const badge = document.createElement('span');
+        badge.className = 'badge bg-primary rounded-pill px-2 py-1 d-inline-flex align-items-center';
+        badge.innerHTML = `
+          ${truncateText(labelText)}
+          <button type="button" class="btn-close btn-close-white ms-1" aria-label="Remove"></button>
+        `;
+
+        badge.querySelector('button').addEventListener('click', function () {
+          input.checked = false;
+          updateBadges();
+        });
+
+        li.appendChild(badge);
+        badgeContainer.appendChild(li);
+      });
+
+      // if (checkedInputs.length > 0) {
+      //   const li = document.createElement('li');
+      //   li.className = 'list-inline-item mb-1';
+
+      //   const searchBtn = document.createElement('button');
+      //   searchBtn.type = 'button'; // <- Nem 'submit', hogy ne default submit legyen
+      //   searchBtn.className = 'btn btn-outline-primary btn-sm fw-bold';
+      //   searchBtn.innerHTML = '<em class="icon ni ni-search me-1"></em> Apply Filter';
+
+      //   searchBtn.addEventListener('click', () => {
+      //     filterForm.submit(); // <<< Itt submitoljuk programból
+      //   });
+
+      //   li.appendChild(searchBtn);
+      //   badgeContainer.appendChild(li);
+      // }
+    }
+
+    filterForm.querySelectorAll('input[type="checkbox"]').forEach(input => {
+      input.addEventListener('change', updateBadges);
+    });
+
+    updateBadges();
+  });
+</script>
+
+
+{% endblock %}

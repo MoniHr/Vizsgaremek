@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} {{ block.super }} | Boost Job {% endblock %}
+
+{% block aside %}
+{% include 'aside/aside_dashboard.html' with user_type=request.user.user_type %}
+{% endblock %}
+
+{% block content %}
+<div class="nk-content-wrap">
+  {% include 'dashboard/header_dashboard.html' %}
+
+  <div class="nk-block">
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="nk-block">
+          <div class="nk-block-head">
+            <div class="nk-block-between">
+              <div class="nk-block-head-content">
+                <h5 class="title">Boost Job: {{ job.title }}</h5>
+                <p>Choose a plan below to boost your job post.</p>
+              </div>
+              <div class="nk-block-head-content">
+                <a href="{% url 'list_jobs' %}" class="btn btn-outline-light bg-white">
+                  <em class="icon ni ni-arrow-left"></em><span>Back to My Jobs</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="nk-block">
+            <div class="row g-gs">
+              {% for plan in plans %}
+              <div class="col-md-6 col-xxl-4">
+                <div class="card card-bordered pricing {% if forloop.first %}recommend{% endif %}">
+                  {% if forloop.first %}
+                  <span class="pricing-badge badge bg-primary">Recommended</span>
+                  {% endif %}
+                  <div class="pricing-head">
+                    <div class="pricing-title">
+                      <h4 class="card-title title">{{ plan.name }}</h4>
+                      <p class="sub-text">{{ plan.description|default:"Boost your job with this plan." }}</p>
+                    </div>
+                    <div class="card-text">
+                      <div class="row">
+                        <div class="col-6"><span class="h4 fw-500">{{ plan.duration_days }}</span><span
+                            class="sub-text">Days Boosted</span></div>
+                        <div class="col-6"><span class="h4 fw-500">${{ plan.price }}</span><span
+                            class="sub-text">Price</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pricing-body">
+                    <ul class="pricing-features">
+                      <li><span class="w-50">Boost Type</span> - <span class="ms-auto">
+                        {{ plan.get_plan_type_display }}</span></li>
+                      <li><span class="w-50">Visible On</span> - <span class="ms-auto">
+                        {% if plan.plan_type == "homepage" %}Homepage{% elif plan.plan_type == "banner" %}Banner{% else %}Standard{% endif %}
+                      </span></li>
+                      <li><span class="w-50">Duration</span> - <span class="ms-auto">{{ plan.duration_days }}
+                          days</span></li>
+                    </ul>
+                    <div class="pricing-action">
+                      <form method="post" action="{% url 'boost_checkout' job.slug %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="plan_id" value="{{ plan.id }}">
+                        <button type="submit" class="btn btn-outline-light">Choose this plan</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% empty %}
+              <div class="col-12">
+                <p class="text-muted">No boost plans are available at this time.</p>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,224 @@
+id,code,name
+1,AF,Afghanistan
+2,AL,Albania
+3,DZ,Algeria
+4,AS,American Samoa
+5,AD,Andorra
+6,AO,Angola
+7,AI,Anguilla
+8,AQ,Antarctica
+9,AG,Antigua and Barbuda
+10,AR,Argentina
+11,AM,Armenia
+12,AW,Aruba
+13,AU,Australia
+14,AT,Austria
+15,AZ,Azerbaijan
+16,BS,Bahamas
+17,BH,Bahrain
+18,BD,Bangladesh
+19,BB,Barbados
+20,BY,Belarus
+21,BE,Belgium
+22,BZ,Belize
+23,BJ,Benin
+24,BM,Bermuda
+25,BT,Bhutan
+26,BO,Bolivia
+27,BQ,Bonaire
+28,BA,Bosnia and Herzegovina
+29,BW,Botswana
+30,BR,Brazil
+31,BN,Brunei
+32,BG,Bulgaria
+33,BF,Burkina Faso
+34,BI,Burundi
+35,KH,Cambodia
+36,CM,Cameroon
+37,CA,Canada
+38,CV,Cape Verde
+39,KY,Cayman Islands
+40,CF,Central African Republic
+41,TD,Chad
+42,CL,Chile
+43,CN,China
+44,CO,Colombia
+45,KM,Comoros
+46,CG,Congo (Brazzaville)
+47,CD,Congo (Kinshasa)
+48,CK,Cook Islands
+49,CR,Costa Rica
+50,HR,Croatia
+51,CU,Cuba
+52,CW,Curacao
+53,CY,Cyprus
+54,CZ,Czech Republic
+55,DK,Denmark
+56,DJ,Djibouti
+57,DM,Dominica
+58,DO,Dominican Republic
+59,EC,Ecuador
+60,EG,Egypt
+61,SV,El Salvador
+62,GQ,Equatorial Guinea
+63,ER,Eritrea
+64,EE,Estonia
+65,SZ,Eswatini
+66,ET,Ethiopia
+67,FJ,Fiji
+68,FI,Finland
+69,FR,France
+70,GA,Gabon
+71,GM,Gambia
+72,GE,Georgia
+73,DE,Germany
+74,GH,Ghana
+75,GI,Gibraltar
+76,GR,Greece
+77,GL,Greenland
+78,GD,Grenada
+79,GU,Guam
+80,GT,Guatemala
+81,GG,Guernsey
+82,GN,Guinea
+83,GW,Guinea-Bissau
+84,GY,Guyana
+85,HT,Haiti
+86,VA,Vatican City
+87,HN,Honduras
+88,HK,Hong Kong
+89,HU,Hungary
+90,IS,Iceland
+91,IN,India
+92,ID,Indonesia
+93,IR,Iran
+94,IQ,Iraq
+95,IE,Ireland
+96,IM,Isle of Man
+97,IL,Israel
+98,IT,Italy
+99,JM,Jamaica
+100,JP,Japan
+101,JE,Jersey
+102,JO,Jordan
+103,KZ,Kazakhstan
+104,KE,Kenya
+105,KI,Kiribati
+106,KP,North Korea
+107,KR,South Korea
+108,KW,Kuwait
+109,KG,Kyrgyzstan
+110,LA,Laos
+111,LV,Latvia
+112,LB,Lebanon
+113,LS,Lesotho
+114,LR,Liberia
+115,LY,Libya
+116,LI,Liechtenstein
+117,LT,Lithuania
+118,LU,Luxembourg
+119,MO,Macao
+120,MG,Madagascar
+121,MW,Malawi
+122,MY,Malaysia
+123,MV,Maldives
+124,ML,Mali
+125,MT,Malta
+126,MH,Marshall Islands
+127,MR,Mauritania
+128,MU,Mauritius
+129,MX,Mexico
+130,FM,Micronesia
+131,MD,Moldova
+132,MC,Monaco
+133,MN,Mongolia
+134,ME,Montenegro
+135,MS,Montserrat
+136,MA,Morocco
+137,MZ,Mozambique
+138,MM,Myanmar
+139,NA,Namibia
+140,NR,Nauru
+141,NP,Nepal
+142,NL,Netherlands
+143,NC,New Caledonia
+144,NZ,New Zealand
+145,NI,Nicaragua
+146,NE,Niger
+147,NG,Nigeria
+148,NU,Niue
+149,NF,Norfolk Island
+150,MP,Northern Mariana Islands
+151,NO,Norway
+152,OM,Oman
+153,PK,Pakistan
+154,PW,Palau
+155,PS,Palestine
+156,PA,Panama
+157,PG,Papua New Guinea
+158,PY,Paraguay
+159,PE,Peru
+160,PH,Philippines
+161,PL,Poland
+162,PT,Portugal
+163,PR,Puerto Rico
+164,QA,Qatar
+165,MK,North Macedonia
+166,RO,Romania
+167,RU,Russia
+168,RW,Rwanda
+169,SH,Saint Helena
+170,KN,Saint Kitts and Nevis
+171,LC,Saint Lucia
+172,PM,Saint Pierre and Miquelon
+173,VC,Saint Vincent and the Grenadines
+174,WS,Samoa
+175,SM,San Marino
+176,ST,Sao Tome and Principe
+177,SA,Saudi Arabia
+178,SN,Senegal
+179,RS,Serbia
+180,SC,Seychelles
+181,SL,Sierra Leone
+182,SG,Singapore
+183,SK,Slovakia
+184,SI,Slovenia
+185,SB,Solomon Islands
+186,SO,Somalia
+187,ZA,South Africa
+188,SS,South Sudan
+189,ES,Spain
+190,LK,Sri Lanka
+191,SD,Sudan
+192,SR,Suriname
+193,SE,Sweden
+194,CH,Switzerland
+195,SY,Syria
+196,TW,Taiwan
+197,TJ,Tajikistan
+198,TZ,Tanzania
+199,TH,Thailand
+200,TL,Timor-Leste
+201,TG,Togo
+202,TK,Tokelau
+203,TO,Tonga
+204,TT,Trinidad and Tobago
+205,TN,Tunisia
+206,TR,Turkey
+207,TM,Turkmenistan
+208,TV,Tuvalu
+209,UG,Uganda
+210,UA,Ukraine
+211,AE,United Arab Emirates
+212,GB,United Kingdom
+213,US,United States
+214,UY,Uruguay
+215,UZ,Uzbekistan
+216,VU,Vanuatu
+217,VE,Venezuela
+218,VN,Vietnam
+219,WF,Wallis and Futuna
+220,EH,Western Sahara
+221,YE,Yemen
+222,ZM,Zambia
+223,ZW,Zimbabwe

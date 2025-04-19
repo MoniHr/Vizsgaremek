@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+
+python /app/manage.py collectstatic --noinput
+
+python manage.py migrate
+
+CORES=`grep -c ^processor /proc/cpuinfo`
+exec /usr/local/bin/gunicorn config.wsgi --bind 0.0.0.0:8000 --workers $(((CORES*2)+1)) --chdir=/app  --log-level=info --timeout 30 --graceful-timeout 30

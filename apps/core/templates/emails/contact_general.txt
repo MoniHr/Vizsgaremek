@@ -1,0 +1,15 @@
+Hello {{ profile.public_name|default:profile.company_name|default:"User" }},
+
+You have received a new contact message via InterHRM.
+
+Sender Details:
+Name: {{ sender_name }}
+Email: {{ sender_email }}
+
+Message:
+{{ message }}
+
+If you have any questions or need help, contact our team at info@interhrm.com.
+
+Best regards,  
+The InterHRM Team

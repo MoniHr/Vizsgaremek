@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} {{ block.super }} {% endblock %}
+
+{% block aside %}
+{% include 'aside/aside_dashboard.html' with user_type=request.user.user_type %}
+{% endblock %}
+
+{% block content %}
+
+
+<div class="nk-content-wrap">
+  {% include 'dashboard/header_dashboard.html' %}
+
+  <div class="nk-block">
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="nk-block">
+          <div class="nk-block-head">
+            <div class="nk-block-between">
+              <div class="nk-block-head-content">
+                <h5 class="title">Applicants</h5>
+                <p>Basic info, like your name and address, that you use on Nio Platform.</p>
+              </div>
+            </div>
+          </div>
+          <table id="application-table" class="datatable-init nowrap table dataTable dtr-inline collapsed" data-auto-responsive="true">
+            <thead>
+              <tr>
+                <th></th>
+                <th data-priority="1">Job</th>
+                <th data-priority="3">Name</th>
+                <th data-priority="4">Email</th>
+                <th data-priority="5">CV</th>
+                <th data-priority="6">Cover Letter</th>
+                <th data-priority="7">Applied</th>
+                <th data-priority="2" class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for application in applications %}
+              <tr class="align-middle">
+                <td></td>
+                <td>
+                  {% if not application.is_read %}
+                  <span class="text-danger fw-bold">●</span>
+                  {% endif %}
+                  {{ application.job.title|truncatechars:15 }}
+                </td>
+                <td>{{ application.user.profile.public_name }}</td>
+                <td><a href="mailto:{{ application.user.email }}">{{ application.user.email }}</a></td>
+                <td>
+                  {% if application.cv %}
+                  <a href="{{ application.cv.url }}" download class="btn btn-outline-secondary btn-sm">
+                    <i class="fas fa-file-alt"></i> Download
+                  </a>
+                  {% else %}
+                  <span class="text-muted">-</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if application.cover_letter %}
+                  <a href="{{ application.cover_letter.url }}" download class="btn btn-outline-secondary btn-sm">
+                    <i class="fas fa-file-alt"></i> Download
+                  </a>
+                  {% else %}
+                  <span class="text-muted">-</span>
+                  {% endif %}
+                </td>
+                <td>{{ application.created_at|date:"Y-m-d H:i" }}</td>
+                <td class="text-end">
+                  <div class="dropdown">
+                    <a class="dropdown-toggle btn btn-icon btn-trigger text-soft" data-bs-toggle="dropdown">
+                      <em class="icon ni ni-more-h"></em>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
+                      <ul class="link-list-plain">
+                        {% if application.is_read %}
+                        <li>
+                          <a class="dropdown-item" href="{% url 'chat_create' user_id=application.user.id %}">
+                            Message
+                          </a>
+                        </li>
+                        {% endif %}
+                        <li>
+                          <a class="dropdown-item" href="{% url 'public_profile' application.user.profile.slug %}?application_id={{ application.id }}">
+                            View Profile
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item text-danger" href="{% url 'delete_application' application.id %}" onclick="return confirm('Are you sure you want to delete this application?');">
+                            Delete
+                          </a>
+                        </li>
+
+                      </ul>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+{% endblock %}

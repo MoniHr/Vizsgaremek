@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} {{ block.super }} {% endblock %}
+
+{% block aside %}
+{% include 'aside/aside_dashboard.html' with user_type=request.user.user_type %}
+{% endblock %}
+
+{% block content %}
+
+
+<div class="nk-content-wrap">
+  {% include 'dashboard/header_dashboard.html' %}
+  <div class="nk-block">
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="nk-block">
+          <div class="nk-block-head">
+            <div class="nk-block-between">
+              <div class="nk-block-head-content">
+                <h5 class="title">Your Applied Jobs</h5>
+                <p>Jobs You have applied to.</p>
+              </div>
+            </div>
+          </div>
+          <table id="applications-table" class="datatable-init nowrap table dataTable dtr-inline collapsed" data-auto-responsive="true">
+            <thead>
+              <tr>
+                <th></th> <!-- + ikon mobilra -->
+                <th data-priority="1">Jobs</th>
+                <th data-priority="3">Company</th>
+                <th data-priority="4">CV</th>
+                <th data-priority="5">Cover Letter</th>
+                <th data-priority="6">Created at</th>
+                <th data-priority="7">Seen?</th>
+                <th data-priority="2" class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for application in applications %}
+              <tr class="align-middle">
+                <td></td>
+                <td>
+                  {% if not application.is_read %}
+                  <span class="text-danger fw-bold">●</span>
+                  {% endif %}
+                  {{ application.job.title|truncatechars:25 }}
+                </td>
+                <td>
+                  <a href="{% url 'public_profile' application.job.created_by.profile.slug %}">
+                    {{ application.job.created_by.profile }}
+                  </a>
+                </td>
+                <td>
+                  {% if application.cv %}
+                  <a href="{{ application.cv.url }}" download class="btn btn-outline-secondary btn-sm">
+                    <i class="fas fa-file-alt"></i> Download
+                  </a>
+                  {% else %}
+                  <span class="text-muted">-</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if application.cover_letter %}
+                  <a href="{{ application.cover_letter.url }}" download class="btn btn-outline-secondary btn-sm">
+                    <i class="fas fa-file-alt"></i> Download
+                  </a>
+                  {% else %}
+                  <span class="text-muted">-</span>
+                  {% endif %}
+                </td>
+                <td>{{ application.created_at|date:"Y-m-d H:i" }}</td>
+                <td>
+                  {% if application.is_read %}
+                  <span class="badge bg-success">Yes</span>
+                  {% else %}
+                  <span class="badge bg-danger">No</span>
+                  {% endif %}
+                </td>
+                <td class="text-end">
+                  <div class="dropdown">
+                    <a class="dropdown-toggle btn btn-icon btn-trigger text-soft" data-bs-toggle="dropdown">
+                      <em class="icon ni ni-more-h"></em>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
+                      <ul class="link-list-plain">
+
+                        {% if application.is_read %}
+                        <li>
+                          <a href="{% url 'chat_create' application.job.created_by.id %}">Message</a>
+                        </li>
+                        {% endif %}
+                        <li>
+                          <a href="{{ application.job.get_absolute_url }}">View Job</a>
+                        </li>
+                        <li>
+                          <a class="text-danger" href="{% url 'delete_application' application.id %}" onclick="return confirm('Are you sure you want to delete this application?');">
+                            Delete
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,66 @@
+<html>
+<body>
+Name: {{ user.profile.user.display_name }}
+{% if not user.profile.is_date_of_birth_private %}
+  {{ user.profile.date_of_birth }}
+{% endif %}
+
+{% if not user.profile.is_address_private %}
+  Address:
+  {{ user.profile.profile_location }}
+  {{ user.profile.profile_city }}
+  {{ user.profile.profile_address }}
+{% endif %}
+
+
+{% if not user.profile.is_contact_phone_private %}
+  {% if user.profile.phone_number %}
+    Phone number: {{ user.profile.phone_number }}
+  {% endif %}
+  {% if  user.profile.user.email %}
+    {{ user.profile.user.email }}
+  {% endif %}
+{% endif %}
+
+{% if user.profile.educations.exists %}
+
+  Education:
+  {% for education in user.profile.educations.all %}
+    <hr>
+    {{ education.start_date }} -
+    {% if education.in_progress %}
+      -
+    {% else %}
+      {{ education.end_date }}
+    {% endif %}
+
+    {{ education.field_of_study }}
+    {{ education.degree }}
+    {{ education.school }}
+
+  {% endfor %}
+{% endif %}
+
+{% if user.profile.work_experiences.exists %}
+  Work Experience:
+  {% for work_experience in user.profile.work_experiences.all %}
+    {{ work_experience.start_date }} <b>to</b>
+    {% if work_experience.still_there %}
+      -
+    {% else %}
+      {{ work_experience.end_date }}
+    {% endif %}
+    {{ work_experience.job_title }}
+    - {{ work_experience.employer_name }}
+    {{ work_experience.main_tasks }}
+  {% endfor %}
+{% endif %}
+
+{% if user.profile.languages_known.exists %}
+  Language knowledge:
+  {% for language_knowledge in user.profile.languages_known.all %}
+    {{ language_knowledge.language }} - {{ language_knowledge.level }}
+  {% endfor %}
+{% endif %}
+</body>
+</html>

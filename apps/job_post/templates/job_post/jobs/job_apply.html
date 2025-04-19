@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} {{ block.super }} {% endblock %}
+{% block content %}
+
+
+<div class="nk-content-wrap">
+  <div class="nk-block">
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="nk-block">
+          <div class="nk-block-head">
+            <div class="nk-block-between">
+              <div class="nk-block-head-content">
+                <h5 class="title">Apply to Job: {{ job.title }}</h5>
+                <p>
+                  Attach your CV and Cover Letter if required, and write a few sentences about yourself explaining why
+                  you want this job.</p>
+              </div>
+              <div class="nk-block-head-content">
+                <a href="javascript:history.back();" class="btn btn-outline-light bg-white d-none d-sm-inline-flex">
+                  <em class="icon ni ni-arrow-left"></em><span>Back</span>
+                </a>
+                <a href="javascript:history.back();"
+                  class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none">
+                  <em class="icon ni ni-arrow-left"></em>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <form action="" method="post" enctype="multipart/form-data" autocomplete="off">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="mb-3 mt-3">
+              <div class="">
+                <input type="submit" name="submit" value="Submit" class="btn btn-primary w-100" id="submit-id-submit">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

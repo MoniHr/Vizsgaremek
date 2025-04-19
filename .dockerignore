@@ -1,0 +1,11 @@
+.envs
+.editorconfig
+.pre-commit-config.yaml
+.gitignore
+.git
+.idea
+local.yml
+production.yml
+.venv
+venv
+inter-hm.iml

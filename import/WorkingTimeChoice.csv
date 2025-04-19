@@ -1,0 +1,11 @@
+id,code,name
+1,CASUAL,Casual
+2,FOR_CHANGED_EMPLOYMENT_CAPACITY,For changed employment capacity
+3,FOR_MOTHERS_AND_OR_SINGLE_PARENTS,For Mothers and / or Single Parents
+4,FULL_TIME,Full time
+5,HOME_OFFICE,Home office
+6,IN_PENSION_WORK_NEXT_TO_RETIRED,"In pension, work next to retired"
+7,PART_TIME,Part time
+8,PROFESSIONAL_PRACTICE,Professional practice
+9,REMOTE_WORK,Remote work
+10,STUDENT_WORK,Student work

@@ -1,0 +1,5 @@
+Hello {{ application.job.created_by }}
+
+There is a new application for your {{ application.job.title }} vacancy
+
+You can take a look at the application <a href="{{ base_url }}{{ application.get_absolute_url }}">here</a> or here {{ base_url }}{{ application.get_absolute_url }}

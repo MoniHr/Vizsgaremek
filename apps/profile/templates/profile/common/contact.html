@@ -1,0 +1,12 @@
+{% load crispy_forms_tags %}
+<div class="nk-block">
+  <div class="nk-block-head nk-block-head-line">
+    <h6 class="title overline-title text-base">Contact</h6>
+  </div>
+  <form action="{% url 'send_email' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="slug" value="{{ profile.slug }}">
+    {{ email_form|crispy }}
+    <input type="submit" class="btn btn-primary w-100" value="Send Email">
+  </form>
+</div>

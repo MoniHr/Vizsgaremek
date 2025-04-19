@@ -1,0 +1,45 @@
+id,category__name,code,name
+44,"Bank, Insurance, Broker",BROKER,Broker
+43,"Bank, Insurance, Broker",MONEY_LAUNDERING_PREVENTION,"Money Laundering Prevention, Officer"
+42,"Bank, Insurance, Broker",CLAIMS_ADJUSTER,Claims Adjuster
+41,"Bank, Insurance, Broker",LARGE_CORPORATE_SALES,"Large Corporate Business Consultant, Salesperson"
+40,"Bank, Insurance, Broker",MEDIUM_SIZED_BUSINESS_CONSULTANT,"Medium-Sized Company, Business Consultant, Salesperson"
+39,"Bank, Insurance, Broker",SMALL_BUSINESS_CONSULTANT,"Small Business Consultant, Salesperson"
+38,"Bank, Insurance, Broker",LOGISTICS,"Logistics, Transport, Delivery"
+37,"Bank, Insurance, Broker",SECURITY,Security
+36,"Bank, Insurance, Broker",RECEPTIONIST,Receptionist
+35,"Bank, Insurance, Broker",BUSINESS_MANAGER,Business Manager
+34,"Bank, Insurance, Broker",REGIONAL_REPRESENTATIVE_BANK,Regional Representative
+33,"Bank, Insurance, Broker",COMPLIANCE,"Compliance, Complaint Clerk"
+32,"Bank, Insurance, Broker",FINANCIAL_ADVISOR,Financial Advisor
+31,"Bank, Insurance, Broker",CASHIER,"Cashier, Changer, Money Change"
+30,"Bank, Insurance, Broker",TELEPHONE_CLERK,"Telephone Clerk, Telephone Salesperson"
+29,"Bank, Insurance, Broker",ADMINISTRATION_OFFICE_JOB,"Administration, Office Job, Office Assistant"
+28,"Bank, Insurance, Broker",CUSTOMER_REPRESENTATIVE,"Customer Representative, CRM, CSS"
+27,"Bank, Insurance, Broker",CONSULTANT,Consultant
+26,"Bank, Insurance, Broker",CREDIT_RISK,"Credit Risk, Risk Controller"
+25,"Bank, Insurance, Broker",THREE_D_DEVELOPMENT,3D Development
+24,"Bank, Insurance, Broker",WEBDESIGN,"Web Design, Web Developer"
+23,"Bank, Insurance, Broker",BANK_INSURANCE_INFORMATICS,"Bank and Insurance Informatics, Programmer"
+22,"Bank, Insurance, Broker",COACH_AGILE_TEAM_LEADER,"Coach, Agile Team Leader"
+21,"Bank, Insurance, Broker",PROCESS_SPECIALIST,"Process Specialist, Process Development"
+20,"Bank, Insurance, Broker",CORPORATE_CUSTOMER_CONTACT,Corporate Customer Contact
+19,"Bank, Insurance, Broker",PRODUCT_SPECIALIST,"Product Specialist, Product Manager, Product Development Manager"
+18,"Bank, Insurance, Broker",INSURANCE,Insurance
+17,"Bank, Insurance, Broker",PROPERTY_LIABILITY_INSURANCE,Property and Liability Insurance
+16,"Bank, Insurance, Broker",UNIVERSAL_CONSULTANT,Universal Consultant
+15,"Bank, Insurance, Broker",CREDIT_CONTROL,"Credit, Credit Control"
+14,"Bank, Insurance, Broker",BANK_CARD_MANAGEMENT,Bank Card Management
+13,"Bank, Insurance, Broker",ACCOUNT,"Account, Account Management, Manager"
+12,"Bank, Insurance, Broker",SAP,SAP
+11,"Bank, Insurance, Broker",DATA_MINER,"Data Miner, Database Manager, SQL"
+10,"Bank, Insurance, Broker",ANALYST,Analyst
+9,"Bank, Insurance, Broker",INVESTMENT_ANALYST,"Investment, Investment Analyst"
+8,"Bank, Insurance, Broker",BANK_INSURANCE_MANAGEMENT,Bank and Insurance Management
+7,Construction & Building Industry,CONSTRUCTION_ENGINEER,Construction Engineer
+6,Engineering,JAVA,Java
+5,Engineering,CSHARP,C#
+4,"Agriculture, Environment",ENVIRONMENTAL_PROTECTION,Environmental Protection
+3,"Agriculture, Environment",WASTE_MANAGEMENT,Waste Management
+2,"Agriculture, Environment",FACTORY_WORKER,Factory Worker
+1,"Agriculture, Environment",ADMINISTRATION,"Administration, Administrator"

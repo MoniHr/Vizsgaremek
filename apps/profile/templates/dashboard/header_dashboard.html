@@ -1,0 +1,99 @@
+<style>
+  .edit-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    padding: 8px;
+    opacity: 0.5;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.edit-icon i {
+    color: black;
+    font-size: 24px;
+}
+
+.user-avatar:hover .edit-icon {
+    opacity: 1;
+}
+
+</style>
+
+<div class="nk-block-head">
+  <div class="nk-block-between g-3">
+    <div class="nk-block-head-content d-flex align-items-center position-relative" data-bs-target="#profileImageModal"
+    data-bs-toggle="modal">
+
+   <div
+       class="user-avatar sq lg me-3 position-relative {% if not user.profile.get_profile_image_url %}bg-primary{% endif %}"
+       style="{% if user.profile.get_profile_image_url %}background: none;{% endif %}">
+
+       {% if user.profile.get_profile_image_url %}
+       <img src="{{ user.profile.get_profile_image_url }}" alt="Profile Image">
+       {% else %}
+       <em class="icon ni ni-user-alt"></em>
+       {% endif %}
+
+       <div class="edit-icon">
+        <em class="icon ni ni-pen"></em>
+       </div>
+   </div>
+
+   <div>
+       <h3 class="nk-block-title page-title">
+         <strong class="text-primary small">{{ user.profile.display_name }}</strong>
+       </h3>
+       <div class="nk-block-des text-soft">
+         <ul class="list-inline">
+           <li>User ID: <span class="text-base">{{ user.formatted_id }}</span></li>
+         </ul>
+       </div>
+   </div>
+
+</div>
+
+<div class="nk-block-head-content">
+  {% if user.user_type == "COMPANY_EMPLOYEE" %}
+    <a href="{{ user.rel_company.profile.get_absolute_url }}" class="btn btn-outline-light bg-white d-none d-sm-inline-flex">
+      <em class="icon ni ni-eye"></em><span>View company profile</span>
+    </a>
+    <a href="{{ user.rel_company.profile.get_absolute_url }}" class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none">
+      <em class="icon ni ni-eye"></em>
+    </a>
+  {% else %}
+    <a href="{{ user.profile.get_absolute_url }}" class="btn btn-outline-light bg-white d-none d-sm-inline-flex">
+      <em class="icon ni ni-eye"></em><span>View my profile</span>
+    </a>
+    <a href="{{ user.profile.get_absolute_url }}" class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none">
+      <em class="icon ni ni-eye"></em>
+    </a>
+  {% endif %}
+</div>
+
+  </div>
+</div>
+
+
+<div class="modal fade" id="profileImageModal" tabindex="-1" aria-labelledby="profileImageModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="profileImageModalLabel">Change Profile Image</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="{% url 'change_profile_image' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="modal-body">
+          <input type="file" id="profile-picture-input" name="profile_picture" accept="image/*" required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Change</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

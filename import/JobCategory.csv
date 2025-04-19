@@ -1,0 +1,35 @@
+id,code,name,icon,featured,order
+34,WAREHOUSE,Warehouse,balance,1,1
+33,TRANSPORTATION,Transportation,home,1,2
+32,TRAINED_UNSKILLED_WORKERS,Trained or Unskilled Jobs,,0,
+31,TECHNOLOGY,Technology,,0,
+30,SUPPLY_CHAIN,Supply Chain & Logistics,,0,
+29,SPORT,Sport,ball,1,5
+28,SECURITY,Security,,0,
+27,SCIENCE_RESEARCH,Science & Research,,1,3
+26,SALES,"Sales, Trade, Commerce, Economics",,0,
+25,RETAIL,Retail,,0,
+24,REAL_ESTATE,Real Estate,,0,
+23,PUBLIC_RELATIONS,Public Relations,,0,
+22,PUBLIC_ADMINISTRATION,"Office Jobs, Administration",,0,
+21,PROJECT_MANAGEMENT,Project Management,,0,
+20,NONPROFIT,Nonprofit,,0,
+19,MEDIA,Media,,0,
+18,MARKETING,"Marketing, PR, Advertisement",,0,
+17,MANUFACTURING,Manufacturing,,0,
+16,LOGISTICS,"Logistics, Duty, Customs Clearance",,0,
+15,LEGAL,Law & Legal Cases,,0,
+14,IT_AND_TELCO,IT & Telecom,,0,
+13,HUMAN_RESOURCES,Human Resources & Labor Case,,0,
+12,HOSPITALITY,Hospitality & Tourism,,0,
+11,HEALTHCARE,Healthcare,,0,
+10,ENGINEERING,Engineering,,0,
+9,ENERGY,Energy,,0,
+8,EDUCATION,Education,,0,
+7,CUSTOMER_SERVICE,"Customer Relation, Customer Service",,0,
+6,CONSTRUCTION,Construction & Building Industry,,0,
+5,BANK_INSURANCE_BROKER,"Bank, Insurance, Broker",,0,
+4,ARTS_ENTERTAINMENT,Arts & Entertainment,,0,
+3,APPRENTICESHIP,"Apprenticeship, Internship",,0,
+2,AGRICULTURE_ENVIRONMENT,"Agriculture, Environment",car,1,4
+1,ACCOUNTANCY,Accountancy & Finance,,0,

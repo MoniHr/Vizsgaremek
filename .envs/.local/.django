@@ -1,0 +1,38 @@
+# ------------------------------------------------------------------------------
+# General
+# ------------------------------------------------------------------------------
+
+USE_DOCKER=true
+IPYTHONDIR=/app/.ipython
+DJANGO_DEBUG=true
+DJANGO_USE_DOCKER=true
+
+# ------------------------------------------------------------------------------
+# Security / CSRF
+# ------------------------------------------------------------------------------
+DJANGO_CSRF_TRUSTED_ORIGINS=https://interhrm.com,https://www.interhrm.com
+#https://localhost.com
+
+# ------------------------------------------------------------------------------
+# Redis
+# ------------------------------------------------------------------------------
+DJANGO_REDIS_URL=redis://redis:6379/0
+
+# ------------------------------------------------------------------------------
+# Email Settings
+# ------------------------------------------------------------------------------
+DJANGO_EMAIL_HOST=smtp.gmail.com
+DJANGO_EMAIL_PORT=587
+DJANGO_EMAIL_HOST_USER=sikler.sikler@gmail.com
+DJANGO_EMAIL_HOST_PASSWORD=qjmy kctb hfqt ayna
+DJANGO_EMAIL_USE_TLS=true
+DEFAULT_FROM_EMAIL=sikler.sikler@gmail.com
+
+# ------------------------------------------------------------------------------
+# Stripe
+# ------------------------------------------------------------------------------
+STRIPE_TEST_SECRET_KEY=sk_test_51RAZzqCjOUOldO3s0wInvXnvx4o7L4HUn0q5maw9cgKeFFJmMxRWz98BfcQohvQfoy4nXcpDadYQ57H3zJTXjBmV00nJIgPs26
+STRIPE_LIVE_SECRET_KEY=sk_live_...
+STRIPE_PUBLIC_KEY=pk_test_51RAZzqCjOUOldO3s31RMNsHltRu1gCe3M2hY9IP0kWgU7BQXk7UiC5U2ksTZuNPT2ErufJsI5n3Ob9WVAHPqhCqt00HPUEf0Os
+STRIPE_WEBHOOK_SECRET=whsec_85b7961520087c223efe522510c484dda8f65601863143101b51f9555c0940a2
+STRIPE_LIVE_MODE=false

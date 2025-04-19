@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="user-dashboard-info-box">
+          <div class="section-title-02 mb-4 d-inline-block">
+            <h4>Search between employees</h4>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <form method="get">
+                {{ filter.form |crispy }}
+                <input type="submit"/>
+              </form>
+            </div>
+          </div>
+          <div class="row">
+            {% for obj in filter.qs %}
+              <div class="col-12">
+                ide jön valami
+                 - ${{ obj.price }}<br/>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

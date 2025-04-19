@@ -1,0 +1,5 @@
+<select name="sub_activity" id="id_sub_activity">
+  {% for sub_activity in sub_activities %}
+      <option value="{{ sub_activity.id }}" {% if sub_activity.id == selected_sub_activity_id %}selected{% endif %}>{{ sub_activity.name }}</option>
+  {% endfor %}
+</select>

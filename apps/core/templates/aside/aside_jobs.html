@@ -1,0 +1,17 @@
+{% load crispy_forms_tags %}
+
+<div class="nk-aside" data-content="sideNav" data-toggle-overlay="true" data-toggle-screen="lg" data-toggle-body="true">
+  <div class="nk-sidebar-menu p-3 p-lg-0" data-simplebar>
+
+    <form action="" id="filterForm" data-subcategory-url="{% url 'ajax_load_sub_categories_filter' %}">
+      <div class="sidebar">
+        {% crispy filter.form helper %}
+        <input class="btn btn-primary btn-sm w-100 mb-2" id="filterButton" type="submit" value="Search">
+      </div>
+    </form>
+
+  </div>
+  <div class="nk-aside-close">
+    <a href="#" class="toggle" data-target="sideNav"><em class="icon ni ni-cross"></em></a>
+  </div>
+</div>

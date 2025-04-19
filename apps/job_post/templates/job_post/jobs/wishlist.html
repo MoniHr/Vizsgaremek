@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} {{ block.super }} {% endblock %}
+
+{% block aside %}
+{% include 'aside/aside_dashboard.html' with user_type=request.user.user_type %}
+{% endblock %}
+
+{% block content %}
+
+<div class="nk-content-wrap">
+  {% include 'dashboard/header_dashboard.html' %}
+
+  <div class="nk-block">
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="nk-block">
+          <div class="nk-block-head">
+            <div class="nk-block-between">
+              <div class="nk-block-head-content">
+                <h5 class="title">Saved Jobs</h5>
+                <p>Manage your saved job posts here.</p>
+              </div>
+            </div>
+          </div>
+
+
+          <table id="wishlist-job-table" class="datatable-init nowrap table dataTable dtr-inline collapsed" data-auto-responsive="true">
+            <thead>
+              <tr>
+                <th></th>
+                <th data-priority="1">Job Title</th>
+                <th data-priority="3">Company/Freelancer</th>
+                <th data-priority="2" class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for job in wishlist_jobs %}
+              <tr class="align-middle">
+                <td></td>
+                <td class="text-truncate">
+                  {{ job.title|truncatechars:50 }}
+                  <small class="text-muted ms-1">({{ job.created_at|date:"Y-m-d" }})</small>
+                </td>
+                <td>
+                  {{ job.created_by.profile }}
+                </td>
+                <td class="text-end">
+                  <div class="dropdown">
+                    <a class="dropdown-toggle btn btn-icon btn-trigger text-soft" data-bs-toggle="dropdown">
+                      <em class="icon ni ni-more-h"></em>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
+                      <ul class="link-list-plain">
+                        <li><a href="{{ job.get_absolute_url }}">View</a></li>
+                        <li><a href="javascript:void(0);" data-job-slug="{{ job.slug }}" class="text-danger remove-wishlist-btn">Remove</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </td>
+
+
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".remove-wishlist-btn").forEach(function (button) {
+      button.addEventListener("click", function () {
+        const jobSlug = this.dataset.jobSlug;
+        const url = `{% url 'wishlist_toggle' job_slug='JOB_SLUG_PLACEHOLDER' %}`.replace("JOB_SLUG_PLACEHOLDER", jobSlug);
+
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
+            "X-Requested-With": "XMLHttpRequest",
+          },
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.status === "success") {
+              window.location.reload();
+            }
+          })
+          .catch(error => console.error("AJAX Error:", error));
+      });
+    });
+  });
+</script>
+
+{% endblock %}

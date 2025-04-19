@@ -1,0 +1,236 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="interhrm" class="js">
+
+<head>
+  <base href="../">
+  <meta charset="utf-8">
+  <meta name="author" content="InterHRM">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description"
+    content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+  <!-- Fav Icon  -->
+  <link rel="shortcut icon" href="{% static 'core/images/favicon.png' %}">
+  <!-- Page Title  -->
+  <title>{% block title %} {% endblock %}</title>
+  <!-- StyleSheets  -->
+  <link rel="stylesheet" href="{% static 'core/assets/css/dashlite.css' %}?ver=3.2.4">
+  <link id="skin-default" rel="stylesheet" href="{% static 'core/assets/css/theme.css' %}?ver=3.2.4">
+  <link rel="stylesheet" href="{% static 'core/assets/css/editors/tinymce.css' %}?ver=3.2.4">
+
+  <!-- Flatpickr CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+
+</head>
+
+<body class="nk-body bg-white npc-default has-aside ">
+  <div class="js-preloader">
+    <div class="loading-animation duo-pulse"></div>
+  </div>
+  <div class="nk-app-root">
+    <div class="nk-main ">
+      <div class="nk-wrap ">
+        {% include 'header.html' %}
+
+        <div class="nk-content ">
+          <div class="container wide-xl">
+            <div class="nk-content-inner">
+              {% block aside %}
+
+              {% endblock %}
+
+              <div class="nk-content-body">
+                {% block content %} {% endblock %}
+
+                {% include 'footer.html' %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="mobileNavModal" tabindex="-1" aria-labelledby="mobileNavLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen m-0">
+      <div class="modal-content rounded-0">
+        <div class="modal-header border-0 px-4 py-3">
+          <h5 class="modal-title fw-bold" id="mobileNavLabel">Explore</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body px-4 py-0">
+          <ul class="nk-menu nk-menu-main nav flex-column">
+            <li class="nk-menu-item">
+              <a href="{% url 'search_job_posts' %}" class="nk-menu-link"><span class="nk-menu-text">Listing
+                  Jobs</span></a>
+            </li>
+            <li class="nk-menu-item">
+              <a href="{% url 'search_company' %}" class="nk-menu-link"><span class="nk-menu-text">Companies</span></a>
+            </li>
+            <li class="nk-menu-item">
+              <a href="{% url 'search_employees' %}" class="nk-menu-link"><span
+                  class="nk-menu-text">Employees</span></a>
+            </li>
+            <li class="nk-menu-item">
+              <a href="{% url 'search_freelancers' %}" class="nk-menu-link"><span
+                  class="nk-menu-text">Freelancers</span></a>
+            </li>
+            <li class="nk-menu-item">
+              <a href="{% url 'services' %}" class="nk-menu-link"><span class="nk-menu-text">Services</span></a>
+            </li>
+            <li class="nk-menu-item">
+              <a href="https://blog.interhrm.com" class="nk-menu-link"><span class="nk-menu-text">Blog</span></a>
+            </li>
+            <li class="nk-menu-item">
+              <a href="{% url 'about' %}" class="nk-menu-link"><span class="nk-menu-text">About Us</span></a>
+            </li>
+            <li class="nk-menu-item">
+              <a href="{% url 'contact' %}" class="nk-menu-link"><span class="nk-menu-text">Contact</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- JavaScript -->
+  <script src="{% static 'core/assets/js/bundle.js' %}?ver=3.2.4"></script>
+  <script src="{% static 'core/assets/js/scripts.js' %}?ver=3.2.4"></script>
+  <script src="{% static 'core/assets/js/libs/editors/tinymce.js' %}?ver=3.2.4"></script>
+  <script src="{% static 'core/assets/js/editors.js' %}"></script>
+  <script src="{% static 'core/assets/js/toastr.js' %}"></script>
+  <!-- Flatpickr JS -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
+
+
+  <script>
+    $(document).ready(function () {
+      {% if messages %}
+      {% for message in messages %}
+      NioApp.Toast("{{ message|escapejs }}", "{{ message.tags }}", {
+        position: "top-right",
+        icon: "auto",
+        autoClose: false,
+        closeButton: true,
+        closeOnClick: true
+      });
+      {% endfor %}
+      {% endif %}
+    });
+  </script>
+
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const currentUser = "{{ request.user.email|escapejs }}";
+    const notificationDropdown = document.querySelector(".notification-dropdown");
+
+    const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws";
+    const wsHost = window.location.hostname === "localhost" ? "localhost" : "websocket";
+    const socket = io(`${wsProtocol}://${wsHost}:3001`, {
+      transports: ["websocket"]
+    });
+
+    socket.on("connect", () => {
+      console.log("🔔 Socket connected for unread bell count");
+    });
+
+    // 🔔 Hallgatjuk a user-specifikus badge frissítést
+    socket.on(`unread_count_${currentUser}`, function (data) {
+      if (!notificationDropdown) return;
+
+      const wrapper = notificationDropdown.querySelector(".icon-status");
+      const bellIcon = notificationDropdown.querySelector(".ni-bell");
+
+      if (data.unread_count > 0) {
+        // 🔴 Ha nincs wrapper, be kell rakni
+        if (!wrapper) {
+          const newWrapper = document.createElement("div");
+          newWrapper.classList.add("icon-status", "icon-status-danger");
+          newWrapper.innerHTML = `<em class="icon ni ni-bell bell-animate"></em>`;
+
+          bellIcon.replaceWith(newWrapper);
+        }
+      } else {
+        // 🟢 Ha van wrapper, akkor cseréljük le sima ikonra
+        if (wrapper) {
+          wrapper.outerHTML = `<em class="icon ni ni-bell"></em>`;
+        }
+      }
+    });
+  });
+</script>
+
+
+
+  <style>
+    @keyframes bell-ring {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      15% {
+        transform: rotate(15deg);
+      }
+
+      30% {
+        transform: rotate(-10deg);
+      }
+
+      45% {
+        transform: rotate(5deg);
+      }
+
+      60% {
+        transform: rotate(-5deg);
+      }
+
+      75% {
+        transform: rotate(3deg);
+      }
+
+      100% {
+        transform: rotate(0deg);
+      }
+    }
+
+    .bell-animate {
+      animation: bell-ring 1s infinite ease-in-out;
+      transform-origin: top center;
+      display: inline-block;
+    }
+
+
+    @media (max-width: 991.98px) {
+      #mobileNavModal .modal-content {
+        background-color: #f8f9fa;
+        /* világos háttér */
+      }
+
+      #mobileNavModal .nk-menu-link {
+        padding: 1rem;
+        font-size: 1.1rem;
+        border-bottom: 1px solid #e4e6ef;
+        color: #334155;
+      }
+
+      #mobileNavModal .nk-menu-link:hover {
+        background-color: #e9ecef;
+      }
+
+      #mobileNavLabel {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+
+</body>
+
+</html>

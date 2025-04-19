@@ -1,0 +1,289 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block aside %}
+{% include 'aside/aside_chat.html' with user=request.user chat_rooms=chat_rooms %}
+{% endblock %}
+
+{% block content %}
+<div class="nk-chat nk-chat-boxed">
+  <div class="nk-chat-body">
+    {% if chat_room %}
+    <div class="nk-chat-head">
+      <ul class="nk-chat-head-info">
+        <li class="nk-chat-head-user">
+          <div class="user-card">
+            <div class="user-avatar{% if not other_user.profile.get_profile_image_url %} bg-primary{% endif %}"
+              style="{% if other_user.profile.get_profile_image_url %}background: none;{% endif %}">
+              {% if other_user.profile.get_profile_image_url %}
+              <img src="{{ other_user.profile.get_profile_image_url }}" alt="Profile Image">
+              {% else %}
+              <em class="icon ni ni-user-alt"></em>
+              {% endif %}
+            </div>
+
+            <div class="user-info">
+              <div class="lead-text">
+                {% if other_user.profile.company_name %}{{ other_user.profile.company_name }}{% else %}
+                {{ other_user.profile.public_name }}{% endif %}
+              </div>
+              <div class="sub-text">
+                {% if other_user.profile.activity %}
+                  {{ other_user.profile.activity|truncatechars:30|default:"-" }}
+                {% else %}
+                  {{ other_user.profile.profession|truncatechars:30|default:"-" }}
+                {% endif %}
+              </div>
+            </div>
+            <p id="typing-indicator" class="text-muted mt-2" style="display: none;">✍️ Someone is typing...</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nk-chat-panel" id="chat-messages">
+      {% for message in chat_messages %}
+      <div class="chat {% if message.sender == request.user %}is-me{% else %}is-you{% endif %}">
+        <div class="chat-content">
+          <div class="chat-bubbles">
+            <div class="chat-bubble">
+              <div class="chat-msg">{{ message.message }}</div>
+            </div>
+          </div>
+          <ul class="chat-meta">
+            {% if message.sender != request.user %}
+            <li>{{ message.timestamp|date:"H:i A" }}</li>
+            {% else %}
+            <li>{{ message.timestamp|date:"H:i A" }}</li>
+            {% endif %}
+          </ul>
+
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-muted">No messages yet.</p>
+      {% endfor %}
+    </div>
+
+    <div class="nk-chat-editor">
+      <div class="nk-chat-editor-form">
+        <div class="form-control-wrap">
+          <textarea id="message-input" class="form-control form-control-simple no-resize"
+  rows="1" placeholder="Type your message... (max 500 character)" maxlength="500"></textarea>
+
+        </div>
+      </div>
+      <ul class="nk-chat-editor-tools g-2">
+        <li>
+          <button id="send-message" class="btn btn-round btn-primary btn-icon">
+            <em class="icon ni ni-send-alt"></em>
+          </button>
+        </li>
+      </ul>
+    </div>
+    {% else %}
+    <div class="text-center mt-5">
+      <p class="lead">Select a conversation to start chatting.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const chatMessages = document.getElementById("chat-messages");
+  const messageInput = document.getElementById("message-input");
+  const sendMessageButton = document.getElementById("send-message");
+  const typingIndicator = document.getElementById("typing-indicator");
+  const requestUserEmail = "{{ request.user.email|escapejs }}";
+  const chatRoomId = "{{ chat_room.id|default:'' }}";
+
+  if (!chatRoomId) return;
+
+  const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws";
+  const wsHost = window.location.hostname === "localhost" ? "localhost" : "websocket";
+  const socket = io(`${wsProtocol}://${wsHost}:3001`, {
+    transports: ["websocket"],
+    reconnection: true,
+    reconnectionAttempts: 5,
+    reconnectionDelay: 3000
+  });
+
+  // 🧠 Formázott idő (csak HH:MM)
+  function formatTime(isoTimestamp) {
+    const date = new Date(isoTimestamp);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+
+  // ✅ Csatlakozáskor markoljuk olvasottnak
+  socket.on("connect", () => {
+    socket.emit("joinRoom", { chat_room: chatRoomId, user_email: requestUserEmail });
+
+    fetch(`/chat/mark-read/${chatRoomId}/`, {
+      method: "GET",
+      headers: { "X-Requested-With": "XMLHttpRequest" },
+    }).then(() => {
+      const chatItem = document.querySelector(`[data-room-id="${chatRoomId}"]`);
+      if (chatItem) {
+        chatItem.classList.remove("is-unread");
+        const bullet = chatItem.querySelector(".status.unread");
+        if (bullet) bullet.remove();
+        const nameEl = chatItem.querySelector(".chat-from .name");
+        if (nameEl) nameEl.style.fontWeight = "normal";
+      }
+    });
+  });
+
+  // ✅ Üzenet fogadása (de ne duplikáljuk a sajátot)
+  socket.on("message", (data) => {
+  const isSent = data.sender === requestUserEmail;
+  if (isSent) return;
+
+  if (data.chat_room === chatRoomId) {
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("chat", "is-you");
+    messageDiv.innerHTML = `
+      <div class="chat-content">
+        <div class="chat-bubbles">
+          <div class="chat-bubble">
+            <div class="chat-msg">${data.message}</div>
+          </div>
+        </div>
+        <ul class="chat-meta">
+          <li>${formatTime(data.timestamp)}</li>
+        </ul>
+      </div>
+    `;
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    typingIndicator.style.display = "none";
+  }
+});
+
+
+  // ✅ Üzenetküldés gomb és Enter
+  function sendMessage() {
+  const message = messageInput.value.trim();
+  if (!message) return;
+
+  if (message.length > 500) {
+    alert("The message is too long. Maximum 500 characters allowed.");
+    return;
+  }
+
+  const now = new Date();
+  const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  const messageDiv = document.createElement("div");
+  messageDiv.classList.add("chat", "is-me");
+  messageDiv.innerHTML = `
+    <div class="chat-content">
+      <div class="chat-bubbles">
+        <div class="chat-bubble">
+          <div class="chat-msg">${message}</div>
+        </div>
+      </div>
+      <ul class="chat-meta">
+        <li>${formattedTime}</li>
+      </ul>
+    </div>
+  `;
+  chatMessages.appendChild(messageDiv);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  // ⬇️ Küldés backendnek és WebSocketnek
+  socket.emit("sendMessage", {
+    chat_room: chatRoomId,
+    sender: requestUserEmail,
+    message: message
+  });
+
+  fetch(`/chat/send/${chatRoomId}/`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-CSRFToken": "{{ csrf_token }}" },
+    body: JSON.stringify({ message: message })
+  });
+
+  messageInput.value = "";
+}
+
+
+  sendMessageButton?.addEventListener("click", sendMessage);
+
+  messageInput?.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  // ✅ Sidebar frissítés csak ha nem én írtam
+  socket.on("chat_list_update", function (data) {
+  const chatItem = document.querySelector(`[data-room-id="${data.chat_room}"]`);
+  if (!chatItem) return;
+
+  const lastMessageEl = chatItem.querySelector(".chat-context .text p");
+  const lastTimeEl = chatItem.querySelector(".chat-from .time");
+
+  if (lastMessageEl) lastMessageEl.textContent = data.last_message;
+  if (lastTimeEl) lastTimeEl.textContent = "Now";
+
+  // ❗️Csak akkor tegyük unreadre, ha nem ebben a szobában vagyok ÉS nem én küldtem
+  if (data.chat_room !== chatRoomId && data.other_user !== requestUserEmail) {
+    chatItem.classList.add("is-unread");
+
+    const bulletStatus = chatItem.querySelector(".status");
+    if (!bulletStatus) {
+      const statusDiv = document.createElement("div");
+      statusDiv.classList.add("status", "unread");
+      statusDiv.innerHTML = `<em class="icon ni ni-bullet-fill"></em>`;
+      chatItem.querySelector(".chat-context").appendChild(statusDiv);
+    }
+
+    const nameEl = chatItem.querySelector(".chat-from .name");
+    if (nameEl) nameEl.style.fontWeight = "600";
+  }
+
+  const parentList = chatItem.parentNode;
+  parentList.removeChild(chatItem);
+  parentList.insertBefore(chatItem, parentList.firstChild);
+});
+
+  // ✅ Ha rámegyek egy szobára, olvasottra állít
+  document.querySelectorAll(".chat-open").forEach(el => {
+    el.addEventListener("click", function () {
+      const roomId = el.closest("[data-room-id]").dataset.roomId;
+
+      fetch(`/chat/mark-read/${roomId}/`, {
+        method: "GET",
+        headers: { "X-Requested-With": "XMLHttpRequest" },
+      }).then(() => {
+        const chatItem = el.closest(".chat-item");
+        if (chatItem) {
+          chatItem.classList.remove("is-unread");
+
+          const bullet = chatItem.querySelector(".status.unread");
+          if (bullet) bullet.remove();
+
+          const nameEl = chatItem.querySelector(".chat-from .name");
+          if (nameEl) nameEl.style.fontWeight = "normal";
+        }
+      });
+    });
+  });
+
+  if (chatMessages) {
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+});
+</script>
+
+
+
+<style>
+  .chat-item.is-unread .name {
+  font-weight: 600;
+}
+</style>
+{% endblock %}

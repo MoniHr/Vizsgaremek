@@ -1,0 +1,157 @@
+{% load static %}
+<div class="nk-header nk-header-fixed is-light">
+  <div class="container-lg wide-xl">
+    <div class="nk-header-wrap">
+      <div class="nk-header-brand">
+        <a href="/" class="logo-link">
+          <img class="logo-light logo-img" src="{% static 'core/images/logo_.png' %}"
+            srcset="{% static 'core/images/logo_.png' %} 2x" alt="logo">
+          <img class="logo-dark logo-img" src="{% static 'core/images/logo_.png' %}"
+            srcset="{% static 'core/images/logo_.png' %} 2x" alt="logo-dark">
+        </a>
+      </div>
+      <div class="nk-header-menu">
+        <ul class="nk-menu nk-menu-main">
+          <li class="nk-menu-item">
+            <a href="{% url 'search_job_posts' %}" class="nk-menu-link">
+              <span class="nk-menu-text">Listing Jobs</span>
+            </a>
+          </li>
+
+          <li class="nk-menu-item">
+            <a href="{% url 'search_company' %}" class="nk-menu-link">
+              <span class="nk-menu-text">Companies</span>
+            </a>
+          </li>
+
+          <li class="nk-menu-item">
+            <a href="{% url 'search_employees' %}" class="nk-menu-link">
+              <span class="nk-menu-text">Employees</span>
+            </a>
+          </li>
+
+          <li class="nk-menu-item">
+            <a href="{% url 'search_freelancers' %}" class="nk-menu-link">
+              <span class="nk-menu-text">Freelancers</span>
+            </a>
+          </li>
+
+          <li class="nk-menu-item">
+            <a href="{% url 'services' %}" class="nk-menu-link">
+              <span class="nk-menu-text">Services</span>
+            </a>
+          </li>
+
+          <li class="nk-menu-item">
+            <a href="https://blog.interhrm.com" class="nk-menu-link">
+              <span class="nk-menu-text">Blog</span>
+            </a>
+          </li>
+
+          <li class="nk-menu-item">
+            <a href="{% url 'about' %}" class="nk-menu-link">
+              <span class="nk-menu-text">About Us</span>
+            </a>
+          </li>
+
+          <li class="nk-menu-item">
+            <a href="{% url 'contact' %}" class="nk-menu-link">
+              <span class="nk-menu-text">Contact</span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+
+
+      <div class="nk-header-tools">
+        <ul class="nk-quick-nav">
+
+          <!-- <li class="dropdown list-apps-dropdown d-lg-none">
+            <a href="javascript:void(0)" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="modal" data-bs-target="#mobileNavModal">
+              <div class="icon-status icon-status-na">
+                <em class="icon ni ni-menu-circled"></em>
+              </div>
+            </a>
+          </li> -->
+
+          {% if unread_applications_count %}
+          <li class="dropdown user-dropdown">
+            <a href="{% url 'applications' %}" class="nk-quick-nav-icon">
+              <div class="user-toggle">
+                <div class="icon-status icon-status-danger">
+                  <em class="icon ni ni-form-validation"></em>
+                </div>
+              </div>
+            </a>
+            {% endif %}
+
+          </li>
+
+          {% if request.user.is_authenticated %}
+          <li class="dropdown notification-dropdown">
+            <a href="{% url 'chat' %}" class="nk-quick-nav-icon">
+              {% if unread_messages_count > 0 %}
+              <div class="icon-status icon-status-danger">
+                <em class="icon ni ni-bell bell-animate"></em>
+              </div>
+              {% else %}
+              <em class="icon ni ni-bell"></em>
+              {% endif %}
+            </a>
+          </li>
+
+
+          <li class="dropdown user-dropdown">
+            <a href="{% url 'edit_profile' %}">
+              <div class="user-toggle">
+                <div class="user-avatar sm{% if not request.user.profile.get_profile_image_url %} bg-primary{% endif %}"
+              style="{% if request.user.profile.get_profile_image_url %}background: none;{% endif %}">
+              {% if request.user.profile.get_profile_image_url %}
+              <img src="{{ request.user.profile.get_profile_image_url }}" alt="Profile Image">
+              {% else %}
+              <em class="icon ni ni-user-alt"></em>
+              {% endif %}
+            </div>
+              </div>
+            </a>
+
+          </li>
+
+
+          {% else %}
+
+          <li class="dropdown user-dropdown">
+            <a href="{% url 'login' %}">
+              <div class="user-toggle">
+                <div class="user-avatar sm">
+                  <em class="icon ni ni-user-alt"></em>
+                </div>
+              </div>
+            </a>
+
+          </li>
+          {% endif %}
+
+          <li class="d-lg-none">
+            {% if request.resolver_match.url_name == 'search_company' or request.resolver_match.url_name == 'search_freelancers' or request.resolver_match.url_name == 'search_job_posts' or request.resolver_match.url_name == 'search_employees' %}
+            <a href="#" class="toggle nk-quick-nav-icon me-n1" data-target="sideNav">
+              <em class="icon ni ni-filter"></em>
+            </a>
+            {% elif request.resolver_match.url_name == 'chat' %}
+            <a href="#" class="toggle nk-quick-nav-icon me-n1" data-target="sideNav">
+              <em class="icon ni ni-chat"></em>
+            </a>
+            {% endif %}
+            <a href="javascript:void(0)" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="modal" data-bs-target="#mobileNavModal">
+              <div class="icon-status icon-status-na">
+                <em class="icon ni ni-menu-circled"></em>
+              </div>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,305 @@
+<div class="nk-aside" data-content="sideNav" data-toggle-overlay="true" data-toggle-screen="lg" data-toggle-body="true">
+  <div class="nk-sidebar-menu" data-simplebar>
+
+    <ul class="nk-menu nk-menu-main">
+      <li class="nk-menu-item">
+        <a href="{% url 'search_job_posts' %}" class="nk-menu-link">
+          <span class="nk-menu-text">Listing Jobs</span>
+        </a>
+      </li>
+
+      <li class="nk-menu-item">
+        <a href="{% url 'search_company' %}" class="nk-menu-link">
+          <span class="nk-menu-text">Companies</span>
+        </a>
+      </li>
+
+      <li class="nk-menu-item">
+        <a href="{% url 'search_employees' %}" class="nk-menu-link">
+          <span class="nk-menu-text">Employees</span>
+        </a>
+      </li>
+
+      <li class="nk-menu-item">
+        <a href="{% url 'search_freelancers' %}" class="nk-menu-link">
+          <span class="nk-menu-text">Freelancers</span>
+        </a>
+      </li>
+
+      <li class="nk-menu-item">
+        <a href="{% url 'services' %}" class="nk-menu-link">
+          <span class="nk-menu-text">Services</span>
+        </a>
+      </li>
+
+      <li class="nk-menu-item">
+        <a href="https://blog.interhrm.com" class="nk-menu-link">
+          <span class="nk-menu-text">Blog</span>
+        </a>
+      </li>
+
+      <li class="nk-menu-item">
+        <a href="{% url 'about' %}" class="nk-menu-link">
+          <span class="nk-menu-text">About Us</span>
+        </a>
+      </li>
+
+      <li class="nk-menu-item">
+        <a href="{% url 'contact' %}" class="nk-menu-link">
+          <span class="nk-menu-text">Contact</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="nk-menu">
+      <li class="nk-menu-heading">
+        <h6 class="overline-title text-primary-alt">Dashboard</h6>
+      </li>
+      {% if user_type == "EMPLOYEE" %}
+      <li class="nk-menu-item">
+        <a href="{% url 'edit_profile' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'edit_profile' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-user-circle"></em></span>
+          <span class="nk-menu-text">Edit Profile</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'list_work_experience' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'list_work_experience' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-briefcase"></em></span>
+          <span class="nk-menu-text">Work Experience</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'list_education' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'list_education' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-book"></em></span>
+          <span class="nk-menu-text">Educations</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'list_language_knowledge' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'list_language_knowledge' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-globe"></em></span>
+          <span class="nk-menu-text">Languages</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'list_cv' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'list_cv' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-folder"></em></span>
+          <span class="nk-menu-text">CVs</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'list_cover_letter' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'list_cover_letter' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-file-text"></em></span>
+          <span class="nk-menu-text">Cover Letters</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'list_document' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'list_document' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-archive"></em></span>
+          <span class="nk-menu-text">Documents</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'wishlist' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'wishlist' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-heart"></em></span>
+          <span class="nk-menu-text">Saved Jobs</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'list_blocked_company' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'list_blocked_company' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-user-cross"></em></span>
+          <span class="nk-menu-text">Blocked Company</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'change_password' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'change_password' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-lock"></em></span>
+          <span class="nk-menu-text">Change Password</span>
+        </a>
+      </li>
+
+      {% elif user_type == "FREELANCER" %}
+      <li class="nk-menu-item">
+        <a href="{% url 'edit_profile' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'edit_profile' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-user-circle"></em></span>
+          <span class="nk-menu-text">Edit Profile</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'list_jobs' %}" class="nk-menu-link {% if request.resolver_match.url_name == 'list_jobs' %}active{% endif %}">
+          <span class="nk-menu-icon">
+            <em class="icon ni ni-briefcase"></em>
+          </span>
+          <span class="nk-menu-text d-flex align-items-center justify-content-between w-100">
+            Manage Jobs
+            {% if active_job_posts_count > 0 %}
+            <span class="badge bg-success ms-2">{{ active_job_posts_count }}</span>
+            {% endif %}
+          </span>
+        </a>
+      </li>
+
+      <li class="nk-menu-item">
+        <a href="{% url 'applications' %}" class="nk-menu-link {% if request.resolver_match.url_name == 'applications' %}active{% endif %}">
+          <span class="nk-menu-icon">
+            <em class="icon ni ni-form-validation"></em>
+          </span>
+          <span class="nk-menu-text d-flex align-items-center justify-content-between w-100">
+            Applicants
+            {% if unread_applicants_count > 0 %}
+            <span class="badge bg-danger ms-2">{{ unread_applicants_count }}</span>
+            {% endif %}
+          </span>
+        </a>
+      </li>
+
+      <li class="nk-menu-item">
+        <a href="{% url 'list_work_experience' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'list_work_experience' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-briefcase"></em></span>
+          <span class="nk-menu-text">Work Experience</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'list_education' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'list_education' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-book"></em></span>
+          <span class="nk-menu-text">Educations</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'list_language_knowledge' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'list_language_knowledge' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-globe"></em></span>
+          <span class="nk-menu-text">Languages</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'list_cv' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'list_cv' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-folder"></em></span>
+          <span class="nk-menu-text">CVs</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'list_cover_letter' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'list_cover_letter' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-file-text"></em></span>
+          <span class="nk-menu-text">Cover Letters</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'list_document' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'list_document' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-archive"></em></span>
+          <span class="nk-menu-text">Documents</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'wishlist' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'wishlist' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-heart"></em></span>
+          <span class="nk-menu-text">Saved Jobs</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'list_blocked_company' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'list_blocked_company' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-user-cross"></em></span>
+          <span class="nk-menu-text">Blocked Company</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'change_password' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'change_password' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-lock"></em></span>
+          <span class="nk-menu-text">Change Password</span>
+        </a>
+      </li>
+
+      {% elif user_type == "COMPANY" %}
+      <li class="nk-menu-item">
+        <a href="{% url 'edit_profile' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'edit_profile' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-user-circle"></em></span>
+          <span class="nk-menu-text">Edit Profile</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'list_jobs' %}" class="nk-menu-link {% if request.resolver_match.url_name == 'list_jobs' %}active{% endif %}">
+          <span class="nk-menu-icon">
+            <em class="icon ni ni-briefcase"></em>
+          </span>
+          <span class="nk-menu-text d-flex align-items-center justify-content-between w-100">
+            Manage Jobs
+            {% if active_job_posts_count > 0 %}
+            <span class="badge bg-light ms-2">{{ active_job_posts_count }}</span>
+            {% endif %}
+          </span>
+        </a>
+      </li>
+
+      <li class="nk-menu-item">
+        <a href="{% url 'applications' %}" class="nk-menu-link {% if request.resolver_match.url_name == 'applications' %}active{% endif %}">
+          <span class="nk-menu-icon">
+            <em class="icon ni ni-form-validation"></em>
+          </span>
+          <span class="nk-menu-text d-flex align-items-center justify-content-between w-100">
+            Applicants
+            {% if unread_applicants_count > 0 %}
+            <span class="badge bg-light ms-2">{{ unread_applicants_count }}</span>
+            {% endif %}
+          </span>
+        </a>
+      </li>
+
+      <li class="nk-menu-item">
+        <a href="{% url 'list_document' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'list_document' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-archive"></em></span>
+          <span class="nk-menu-text">Documents</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'wishlist' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'wishlist' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-heart"></em></span>
+          <span class="nk-menu-text">Saved Jobs</span>
+        </a>
+      </li>
+      <li class="nk-menu-item">
+        <a href="{% url 'change_password' %}"
+          class="nk-menu-link {% if request.resolver_match.url_name == 'change_password' %}active{% endif %}">
+          <span class="nk-menu-icon"><em class="icon ni ni-lock"></em></span>
+          <span class="nk-menu-text">Change Password</span>
+        </a>
+      </li>
+      {% endif %}
+      <li class="nk-menu-item">
+        <a href="javascript:void(0)" onclick="document.getElementById('logout-form').submit(); return false;"
+          class="nk-menu-link">
+          <span class="nk-menu-icon"><em class="icon ni ni-signout"></em></span>
+          <span class="nk-menu-text">Logout</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <form id="logout-form" action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+  </form>
+
+  <div class="nk-aside-close">
+    <a href="#" class="toggle" data-target="sideNav"><em class="icon ni ni-cross"></em></a>
+  </div>
+</div>

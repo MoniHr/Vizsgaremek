@@ -1,0 +1,18 @@
+Dear {{ profile.public_name|default:"Employer" }},
+
+A freelancer or entrepreneur has expressed interest in your project on InterHRM.
+
+Freelancer Details:
+Name: {{ sender_name }}
+Email: {{ sender_email }}
+
+Message:
+{{ message }}
+
+You can log in to your employer dashboard and take the next steps:
+https://interhrm.com/dashboard/employer
+
+Need help? Contact us at info@interhrm.com.
+
+Best regards,  
+The InterHRM Team

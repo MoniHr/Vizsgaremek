@@ -1,0 +1,295 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} {{ block.super }} {% endblock %}
+
+{% block aside %}
+{% include 'aside/aside_dashboard.html' with user_type=request.user.user_type %}
+{% endblock %}
+
+{% block content %}
+
+<div class="nk-content-wrap">
+  {% include 'dashboard/header_dashboard.html' %}
+
+  <div class="nk-block">
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="nk-block">
+          <div class="nk-block-head">
+            <div class="nk-block-between">
+              <div class="nk-block-head-content">
+                <h5 class="title">Edit your profile</h5>
+                <p>Edit your profile to keep your information accurate, showcase your experience, and manage your
+                  privacy settings for better opportunities.</p>
+              </div>
+            </div>
+          </div>
+
+          {% if not user.profile.is_active %}
+          <div class="alert alert-warning alert-icon">
+            <em class="icon ni ni-alert-circle"></em>
+            Your profile is incomplete. Please complete the following required fields:
+            <ul class="mt-1 mb-0">
+              {% for field in missing_fields %}
+              <li>{{ field }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+
+          <form action="" method="post" enctype="multipart/form-data" autocomplete="off">
+            {% csrf_token %}
+            {{ form|crispy }}
+
+            <div class="mb-3 mt-3">
+              <div class="">
+                <input type="submit" name="submit" value="Submit" class="btn btn-primary w-100" id="submit-id-submit">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    flatpickr(".flatpickr-date", {
+      dateFormat: "Y-m-d",
+      maxDate: "today",
+      allowInput: true
+    });
+  });
+</script>
+
+
+
+
+<!-- <script>
+  const input = document.getElementById("id_profile_city");
+  const resultsBox = document.getElementById("city-autocomplete-box");
+  const geoUsername = "sikler"; // 👈 Cseréld ki a saját GeoNames felhasználónevedre!
+  const cache = {};
+  let debounceTimer;
+
+  input.addEventListener("input", function () {
+    clearTimeout(debounceTimer);
+
+    const query = input.value.trim();
+    resultsBox.innerHTML = "";
+
+    if (query.length < 2) return;
+
+    debounceTimer = setTimeout(() => {
+      if (cache[query]) {
+        showResults(cache[query]);
+        return;
+      }
+
+      fetch(`https://secure.geonames.org/searchJSON?name_startsWith=${encodeURIComponent(query)}&maxRows=6&featureClass=P&country=HU&username=${geoUsername}`)
+        .then(res => res.json())
+        .then(data => {
+          const results = data.geonames || [];
+          cache[query] = results;
+          showResults(results);
+        });
+    }, 300);
+  });
+
+  function showResults(data) {
+    resultsBox.innerHTML = "";
+
+    data.forEach(place => {
+      const item = document.createElement("button");
+      item.type = "button";
+      item.className = "list-group-item list-group-item-action";
+      item.textContent = `${place.name}${place.adminName1 ? ', ' + place.adminName1 : ''}`;
+      item.onclick = () => {
+        input.value = place.name;
+        resultsBox.innerHTML = "";
+      };
+      resultsBox.appendChild(item);
+    });
+
+    // pozícionálás az input alá
+    const rect = input.getBoundingClientRect();
+    resultsBox.style.left = `${rect.left + window.scrollX}px`;
+    resultsBox.style.top = `${rect.bottom + window.scrollY}px`;
+    resultsBox.style.width = `${rect.width}px`;
+  }
+
+  // kattintás máshova → tűnjön el
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest("#id_profile_city") && !e.target.closest("#city-autocomplete-box")) {
+      resultsBox.innerHTML = "";
+    }
+  });
+</script> -->
+
+<!-- <script>
+  const input = document.getElementById("id_profile_city");
+const resultsBox = document.getElementById("city-autocomplete-box");
+const geoUsername = "sikler"; // GeoNames felhasználónév
+const cache = {};
+let debounceTimer;
+
+// 💡 Vedd le a Chrome autofillt JS-ből
+input.setAttribute("autocomplete", "new-password");
+
+// 👂 Input figyelés debounce-szal
+input.addEventListener("input", function () {
+  clearTimeout(debounceTimer);
+  const query = input.value.trim();
+  resultsBox.innerHTML = "";
+
+  if (query.length < 2) return;
+
+  debounceTimer = setTimeout(() => {
+    if (cache[query]) {
+      showResults(cache[query]);
+      return;
+    }
+
+    fetch(`https://secure.geonames.org/searchJSON?name_startsWith=${encodeURIComponent(query)}&maxRows=6&featureClass=P&country=HU&username=${geoUsername}`)
+      .then(res => res.json())
+      .then(data => {
+        const results = data.geonames || [];
+        cache[query] = results;
+        showResults(results);
+      });
+  }, 300);
+});
+
+// 📦 Találatok megjelenítése és precíz pozicionálás
+function showResults(data) {
+  resultsBox.innerHTML = "";
+
+  if (data.length === 0) return;
+
+  data.forEach(place => {
+    const item = document.createElement("button");
+    item.type = "button";
+    item.className = "list-group-item list-group-item-action";
+    item.textContent = `${place.name}${place.adminName1 ? ', ' + place.adminName1 : ''}`;
+    item.onclick = () => {
+      input.value = place.name;
+      resultsBox.innerHTML = "";
+    };
+    resultsBox.appendChild(item);
+  });
+
+  // 🔧 PONTOS pozicionálás az input alá
+  const inputRect = input.getBoundingClientRect();
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+
+  resultsBox.style.position = "absolute";
+  resultsBox.style.top = `${inputRect.bottom + scrollTop}px`;
+  resultsBox.style.left = `${inputRect.left + scrollLeft}px`;
+  resultsBox.style.width = `${inputRect.width}px`;
+  resultsBox.style.display = "block";
+  resultsBox.style.zIndex = "9999";
+}
+
+// 🔒 Kattintás kívül → lista eltűnik
+document.addEventListener("click", function (e) {
+  if (!e.target.closest("#id_profile_city") && !e.target.closest("#city-autocomplete-box")) {
+    resultsBox.innerHTML = "";
+  }
+});
+
+</script> -->
+
+
+<script>
+  const input = document.getElementById("id_profile_city");
+  const geoUsername = "sikler"; // GeoNames felhasználónév
+  const cache = {};
+  let debounceTimer;
+  let resultsBox = null;
+
+  input.setAttribute("autocomplete", "new-password");
+
+  function createResultsBox() {
+    if (!resultsBox) {
+      resultsBox = document.createElement("div");
+      resultsBox.id = "city-autocomplete-box";
+      resultsBox.className = "list-group";
+      resultsBox.style.position = "absolute";
+      resultsBox.style.zIndex = "9999";
+      document.body.appendChild(resultsBox);
+    }
+  }
+
+  function positionResultsBox() {
+    const rect = input.getBoundingClientRect();
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+    resultsBox.style.left = `${rect.left + scrollLeft}px`;
+    resultsBox.style.top = `${rect.bottom + scrollTop}px`;
+    resultsBox.style.width = `${rect.width}px`;
+  }
+
+  function showResults(data) {
+    resultsBox.innerHTML = "";
+    if (data.length === 0) {
+      resultsBox.style.display = "none";
+      return;
+    }
+
+    resultsBox.style.display = "block";
+    data.forEach(place => {
+      const item = document.createElement("button");
+      item.type = "button";
+      item.className = "list-group-item list-group-item-action";
+      item.textContent = `${place.name}${place.adminName1 ? ', ' + place.adminName1 : ''}`;
+      item.onclick = () => {
+        input.value = place.name;
+        resultsBox.innerHTML = "";
+        resultsBox.style.display = "none";
+      };
+      resultsBox.appendChild(item);
+    });
+
+    positionResultsBox();
+  }
+
+  input.addEventListener("input", function () {
+    createResultsBox();
+    clearTimeout(debounceTimer);
+    const query = input.value.trim();
+    if (query.length < 2) {
+      resultsBox.innerHTML = "";
+      resultsBox.style.display = "none";
+      return;
+    }
+
+    debounceTimer = setTimeout(() => {
+      if (cache[query]) {
+        showResults(cache[query]);
+        return;
+      }
+
+      fetch(`https://secure.geonames.org/searchJSON?name_startsWith=${encodeURIComponent(query)}&maxRows=6&featureClass=P&country=HU&username=${geoUsername}`)
+        .then(res => res.json())
+        .then(data => {
+          const results = data.geonames || [];
+          cache[query] = results;
+          showResults(results);
+        });
+    }, 300);
+  });
+
+  // Ha máshova kattint, elrejtjük
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest("#id_profile_city") && resultsBox && !e.target.closest("#city-autocomplete-box")) {
+      resultsBox.innerHTML = "";
+      resultsBox.style.display = "none";
+    }
+  });
+</script>
+
+
+{% endblock %}

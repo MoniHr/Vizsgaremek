@@ -1,0 +1,56 @@
+version: '3'
+
+volumes:
+  production_postgres_data: { }
+  production_postgres_data_backups: { }
+  production_django_media: { }
+  production_django_static: { }
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./.compose/production/django/Dockerfile
+    image: inter_hm_production_django
+
+    env_file:
+      - ./.envs/.production/.django
+      - ./.envs/.production/.postgres
+    volumes:
+      - production_django_media:/app/media
+      - production_django_static:/app/static
+    depends_on:
+      - postgres
+    command: /start
+    restart: unless-stopped
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./.compose/production/postgres/Dockerfile
+    image: inter_hm_production_postgres
+    volumes:
+      - production_postgres_data:/var/lib/postgresql/data
+      - production_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.production/.postgres
+    restart: unless-stopped
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./.compose/production/nginx/Dockerfile
+    image: inter_htm_production_nginx
+    volumes:
+      - production_django_media:/app/media
+      - production_django_static:/app/static
+    ports:
+      - '0.0.0.0:80:80'
+    depends_on:
+      - django
+      - postgres
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.2.5-alpine
+    restart: unless-stopped

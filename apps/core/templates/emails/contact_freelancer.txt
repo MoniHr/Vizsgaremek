@@ -1,0 +1,18 @@
+Dear {{ profile.public_name|default:"Freelancer" }},
+
+A potential client has shown interest in your services on InterHRM.
+
+Client Details:
+Name: {{ sender_name }}
+Email: {{ sender_email }}
+
+Message:
+{{ message }}
+
+Please keep an eye on your email and dashboard. You can check your account here:
+https://interhrm.com/dashboard/freelancer
+
+If you need help, contact us at info@interhrm.com.
+
+Best regards,  
+The InterHRM Team

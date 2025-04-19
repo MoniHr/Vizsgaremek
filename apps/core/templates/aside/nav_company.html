@@ -1,0 +1,25 @@
+<li class="nk-menu-item">
+  <a href="{% url 'edit_profile' %}" class="nk-menu-link {% if request.resolver_match.url_name == 'edit_profile' %}active{% endif %}">
+    <em class="icon ni ni-user-circle"></em><span class="nk-menu-text">Edit Profile</span>
+  </a>
+</li>
+<li class="nk-menu-item">
+  <a href="{% url 'list_jobs' %}" class="nk-menu-link {% if request.resolver_match.url_name == 'list_jobs' %}active{% endif %}">
+    <em class="icon ni ni-briefcase"></em><span class="nk-menu-text">Manage Jobs</span>
+  </a>
+</li>
+<li class="nk-menu-item">
+  <a href="{% url 'applications' %}" class="nk-menu-link {% if request.resolver_match.url_name == 'applications' %}active{% endif %}">
+    <em class="icon ni ni-activity"></em><span class="nk-menu-text">Applicants</span>
+  </a>
+</li>
+<li class="nk-menu-item">
+  <a href="{% url 'list_document' %}" class="nk-menu-link {% if request.resolver_match.url_name == 'list_document' %}active{% endif %}">
+    <em class="icon ni ni-file-text"></em><span class="nk-menu-text">Documents</span>
+  </a>
+</li>
+<li class="nk-menu-item">
+  <a href="{% url 'change_password' %}" class="nk-menu-link {% if request.resolver_match.url_name == 'change_password' %}active{% endif %}">
+    <em class="icon ni ni-lock"></em><span class="nk-menu-text">Change Password</span>
+  </a>
+</li>

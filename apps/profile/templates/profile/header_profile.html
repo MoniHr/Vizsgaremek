@@ -1,0 +1,60 @@
+<div class="nk-block-head">
+  <div class="nk-block-between g-3">
+    <div class="nk-block-head-content d-flex align-items-center">
+
+      <!-- Profile Avatar -->
+      <div class="user-avatar sq lg me-3 {% if not profile.get_profile_image_url %}bg-primary{% endif %}"
+           style="{% if profile.get_profile_image_url %}background: none;{% endif %}">
+        {% if profile.get_profile_image_url %}
+          <img src="{{ profile.get_profile_image_url }}" alt="Profile Image">
+        {% else %}
+        <em class="icon ni ni-user-alt"></em>
+        {% endif %}
+      </div>
+
+      <!-- Profile Name -->
+      <div>
+        <h3 class="nk-block-title page-title">
+          <strong class="text-primary small">
+            {% if profile.user.user_type == "COMPANY" %}
+              {{ profile.company_name }}
+            {% else %}
+              {{ profile.public_name }}
+            {% endif %}
+          </strong>
+        </h3>
+        <div class="nk-block-des text-soft">
+          <ul class="list-inline">
+          <li>Last updated: <span class="text-base">{{profile.updated_at}}</span></li>
+          </ul>
+        </div>
+      </div>
+
+
+    </div>
+
+    <!-- Messaging Button -->
+     {% if profile != request.user.profile %}
+    <div class="nk-block-head-content">
+      <a href="{% url 'chat_create' profile.user.id %}" class="btn btn-outline-light bg-white d-none d-sm-inline-flex">
+        <em class="icon ni ni-chat"></em>
+        <span>Start Message</span>
+      </a>
+      <a href="{% url 'chat_create' profile.user.id %}" class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none">
+        <em class="icon ni ni-chat"></em>
+      </a>
+    </div>
+    {% else %}
+    <div class="nk-block-head-content">
+      <a href="{% url 'edit_profile' %}" class="btn btn-outline-light bg-white d-none d-sm-inline-flex">
+        <em class="icon ni ni-edit"></em>
+        <span>Edit Profile</span>
+      </a>
+      <a href="{% url 'edit_profile' %}" class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none">
+        <em class="icon ni ni-edit"></em>
+      </a>
+    </div>
+    {% endif %}
+
+  </div>
+</div>

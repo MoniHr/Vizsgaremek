@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} {{ block.super }} | My Jobs {% endblock %}
+
+{% block aside %}
+{% include 'aside/aside_dashboard.html' with user_type=request.user.user_type %}
+{% endblock %}
+
+{% block content %}
+
+<div class="nk-content-wrap">
+  {% include 'dashboard/header_dashboard.html' %}
+
+  <div class="nk-block">
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="nk-block">
+          <div class="nk-block-head">
+            <div class="nk-block-between">
+              <div class="nk-block-head-content">
+                <h5 class="title">Manage Jobs</h5>
+                <p>Here you can manage the jobs you have posted.</p>
+              </div>
+              <div class="nk-block-head-content">
+                <a href="{% url 'create_job' %}" class="btn btn-outline-light bg-white d-none d-sm-inline-flex">
+                  <em class="icon ni ni-plus"></em><span>Post a Job</span>
+                </a>
+                <a href="{% url 'create_job' %}"
+                  class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none">
+                  <em class="icon ni ni-plus"></em>
+                </a>
+              </div>
+            </div>
+          </div>
+          <table id="job-table" class="datatable-init nowrap table dataTable dtr-inline collapsed" data-auto-responsive="true">
+            <thead>
+              <tr>
+                <th></th>
+                <th data-priority="1">Job Title</th>
+                <th data-priority="4">Applicants</th>
+                <th data-priority="5">Active</th>
+                <th data-priority="3">Created at</th>
+                <th data-priority="6">Boost End</th>
+                <th data-priority="2" class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for job in jobs %}
+              <tr class="align-middle">
+                <td></td>
+                <td>
+                  {{ job.title }}
+                  {% if job.is_boosted %}
+                  <span class="badge bg-warning text-dark ms-1">
+                    <em class="icon ni ni-hot me-1"></em> Boosted
+                  </span>
+                  {% endif %}
+                </td>
+
+
+                <td>{{ job.applicants.count }}</td>
+                <td>
+                  {% if job.is_active %}
+                    <span class="badge bg-success">Active</span>
+                  {% else %}
+                    <span class="badge bg-secondary">Inactive</span>
+                  {% endif %}
+                </td>
+                <td>{{ job.created_at|date:"Y-m-d H:i" }}</td>
+                <td>
+                  {% if job.is_boosted and job.boost_end_date %}
+                    <span class="text-muted">{{ job.boost_end_date|date:"Y-m-d" }}</span>
+                  {% else %}
+                    <span class="text-muted">—</span>
+                  {% endif %}
+                </td>
+
+                <td class="text-end">
+                  <div class="dropdown">
+                    <a class="dropdown-toggle btn btn-icon btn-trigger text-soft" data-bs-toggle="dropdown">
+                      <em class="icon ni ni-more-h"></em>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
+                      <ul class="link-list-plain">
+
+                        {% if job.is_boosted %}
+                          {% if job.boost_end_date and job.boost_end_date|date:"U" <= request.now|add:"432000"|date:"U" %}
+                            <!-- 5 napon belül -->
+                            <li><a href="#">Renew Ad</a></li>
+                          {% endif %}
+                        {% else %}
+                          <li><a href="#">Boost Job</a></li>
+                        {% endif %}
+
+                        <li><a href="{{ job.get_absolute_url }}">View</a></li>
+                        <li><a href="{% url 'job_edit' slug=job.slug %}">Edit</a></li>
+                        <li><a href="{% url 'job_delete' slug=job.slug %}" class="text-danger">Remove</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

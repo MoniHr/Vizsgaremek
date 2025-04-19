@@ -1,0 +1,7 @@
+id,code,name,custom_order
+2,ELEMENTARY,Elementary,1
+6,SECONDARY,Secondary,2
+3,HIGHSCHOOL,HighSchool,3
+1,BSC,Bsc,4
+4,MSC,Msc,5
+5,PHD,Phd,6

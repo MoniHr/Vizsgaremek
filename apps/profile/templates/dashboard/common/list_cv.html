@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} {{ block.super }} {% endblock %}
+
+{% block aside %}
+{% include 'aside/aside_dashboard.html' with user_type=request.user.user_type %}
+{% endblock %}
+
+{% block content %}
+
+
+<div class="nk-content-wrap">
+
+  {% include 'dashboard/header_dashboard.html' %}
+
+  <div class="nk-block">
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="nk-block">
+          <div class="nk-block-head">
+            <div class="nk-block-between">
+              <div class="nk-block-head-content">
+                <h5 class="title">List CV</h5>
+                <p>Basic info, like your name and address, that you use on Nio Platform.</p>
+              </div>
+
+              <div class="nk-block-head-content">
+                <a href="{% url 'create_cv' %}"
+                class="btn btn-outline-light bg-white d-none d-sm-inline-flex"><em
+                  class="icon ni ni-upload"></em><span>Upload CV</span></a>
+              <a href="{% url 'create_cv' %}"
+                class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none"><em
+                  class="icon ni ni-upload"></em></a>
+
+                <a href="{% url 'generate_cv' %}"
+                  class="btn btn-outline-light bg-white d-none d-sm-inline-flex"><em
+                    class="icon ni ni-plus"></em><span>Generate CV</span></a>
+                <a href="{% url 'generate_cv' %}"
+                  class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none"><em
+                    class="icon ni ni-plus"></em></a>
+              </div>
+            </div>
+          </div>
+          <table id="cv-table" class="datatable-init nowrap table dataTable dtr-inline collapsed" data-auto-responsive="true">
+            <thead>
+              <tr>
+                <th></th> <!-- A + ikon helye mobilon -->
+                <th data-priority="1">Name</th>
+                <th data-priority="3">Language</th>
+                <th data-priority="4">Created</th>
+                <th data-priority="5">Public?</th>
+                <th data-priority="2" class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for cv in cvs %}
+              <tr class="align-middle">
+                <td></td>
+                <td>{{ cv.name }}</td>
+                <td>{{ cv.language }}</td>
+                <td>{{ cv.created_at|date:"Y-m-d H:i" }}</td>
+                <td>{{ cv.is_public|yesno:"Yes,No" }}</td>
+                <td class="text-end">
+                  <div class="dropdown">
+                    <a class="dropdown-toggle btn btn-icon btn-trigger text-soft" data-bs-toggle="dropdown">
+                      <em class="icon ni ni-more-h"></em>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
+                      <ul class="link-list-plain">
+                        <li>
+                          <a href="{{ cv.cv_file.url }}" target="_blank">View</a>
+                        </li>
+                        <li>
+                          <a href="{% url 'edit_cv' cv.id %}">Edit</a>
+                        </li>
+                        <li>
+                          <a href="{% url 'delete_cv' cv.id %}" class="text-danger">Edit</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

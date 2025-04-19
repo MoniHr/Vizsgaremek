@@ -1,0 +1,349 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block aside %}
+{% include 'aside/aside_jobs.html' with helper=helper filter=filter %}
+{% endblock %}
+
+{% block content %}
+<div class="nk-content-wrap">
+  <div class="nk-block">
+    <div class="row g-gs">
+
+      <div class="col-12">
+        <p>Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ page_obj.paginator.count }}</p>
+
+        <div class="filter-badge-scroll-wrapper">
+          <ul id="active-filters" class="list-inline mb-3"></ul>
+        </div>
+
+        {% for job in page_obj %}
+        <div class="card card-bordered">
+          <div class="card-inner">
+            <div class="project">
+              <div class="project-head">
+                <a href="{% url 'job_detail' job.slug %}" class="project-title">
+                  <div class="project-info">
+                    <h5 class="title1">{{ job.title }}</h5>
+                    <span class="sub-text">
+                      {{ job.created_by.profile.display_name }}
+                      • {{ job.category|default:"-" }} > {{ job.sub_category|default:"-" }}
+                    </span>
+                  </div>
+                </a>
+
+                <a href="javascript:void(0);" class="wishlist-button" data-job-slug="{{ job.slug }}"
+                  data-wishlisted="{% if user.is_authenticated and user in job.saved_by.all %}true{% else %}false{% endif %}"
+                  onclick="toggleWishlist(this, '{{ job.slug }}', '{{ csrf_token }}'); return false;">
+                  <em
+                    class="icon ni ni-heart wishlist-icon
+                     {% if user.is_authenticated and user in job.saved_by.all %}text-danger{% else %}text-light{% endif %}"
+                    id="wishlist-icon-{{ job.slug }}"></em>
+                </a>
+              </div>
+
+              <div class="project-details mb-0">
+                <div>
+                  <p>{{ job.job_description|truncatewords:20|striptags }}</p>
+                </div>
+                <div class="mt-2">
+                  <span class="badge badge-dim bg-light text-gray me-1">
+                    <em class="icon ni ni-calendar me-1"></em>
+                    {% if job.working_time.exists %}
+                    {{ job.working_time.all|join:", " }}
+                    {% else %}
+                    -
+                    {% endif %}
+                  </span>
+
+                  <span class="badge badge-dim bg-light text-gray me-1">
+                    <em class="icon ni ni-clock me-1"></em>
+                    {% if job.work_schedule.exists %}
+                    {{ job.work_schedule.all|join:", " }}
+                    {% else %}
+                    -
+                    {% endif %}
+                  </span>
+
+                  {% if job.educations.exists %}
+                  <span class="badge badge-dim bg-light text-gray me-1">
+                    <em class="icon ni ni-book me-1"></em>
+                    {{ job.educations.all|join:", " }}
+                  </span>
+                  {% else %}
+                  <span class="badge badge-dim bg-light me-1">-</span>
+                  {% endif %}
+                </div>
+
+                <div class="d-flex mt-1 justify-content-between align-items-center">
+                  <small><em class="icon ni ni-map-pin"></em> {{ job.job_location|default:"-" }},
+                    {{ job.job_city|default:"-" }} • Last updated:
+                    {{job.updated_at}}</small>
+                  <a href="{% url 'job_detail' job.slug %}" class="btn btn-icon btn-lg btn-primary"><em
+                      class="icon ni ni-eye"></em></a>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        <div class="col-12 mt-4">
+          {% include 'snippets/paginator.html' %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<style>
+  #div_id_category,
+  #div_id_sub_category,
+  #div_id_working_time,
+  #div_id_work_schedule,
+  #div_id_driving_license,
+  #div_id_education,
+  #div_id_job_location,
+  #div_id_required_language_knowledge_filter {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #DBDFEA;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #fff;
+  }
+
+  .wishlist-icon {
+    font-size: 1.75rem;
+    transition: color 0.2s ease-in-out;
+  }
+
+  .filter-badge-scroll-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+
+  #active-filters::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  #active-filters::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+
+  #active-filters li {
+    margin-right: 0.5rem;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 991.98px) {
+    #filterButton {
+      position: fixed;
+      bottom: -8px;
+      left: 0;
+      width: 280px !important;
+      z-index: 1050;
+    }
+
+    @media (min-width: 576px) and (max-width: 991.98px) {
+      #filterButton {
+        width: 300px !important;
+      }
+    }
+
+  }
+</style>
+
+<!-- Wishlist -->
+<script>
+  function toggleWishlist(element, jobSlug, csrfToken) {
+    const url = `{% url 'wishlist_toggle' job_slug='JOB_SLUG_PLACEHOLDER' %}`.replace("JOB_SLUG_PLACEHOLDER", jobSlug);
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": csrfToken,
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === "success") {
+          const icon = document.querySelector(`#wishlist-icon-${jobSlug}`);
+          icon.classList.toggle("text-danger", data.added);
+          icon.classList.toggle("text-light", !data.added);
+        }
+      })
+      .catch(error => console.error("AJAX Error:", error));
+  }
+</script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("#filterForm");
+    const subCategoryContainer = document.querySelector("#div_id_sub_category");
+    const categoryCheckboxes = document.querySelectorAll("input[name='category']");
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedSubCategories = urlParams.getAll("sub_category");
+    const baseUrl = form.dataset.subcategoryUrl;
+
+    const loadedSubCategories = {};
+    const activeCategories = new Set();
+
+    function renderSubCategories() {
+      subCategoryContainer.innerHTML = "";
+
+      let renderedAny = false;
+
+      activeCategories.forEach((catId) => {
+        const subcats = loadedSubCategories[catId] || [];
+
+        subcats.forEach((subCat) => {
+          const isChecked = selectedSubCategories.includes(String(subCat.id));
+
+          const label = document.createElement("label");
+          label.classList.add("form-check");
+          label.innerHTML = `
+              <input type="checkbox" name="sub_category" value="${subCat.id}" class="form-check-input" ${isChecked ? "checked" : ""}>
+              ${subCat.name}
+            `;
+          subCategoryContainer.appendChild(label);
+          renderedAny = true;
+        });
+      });
+
+      if (!renderedAny) {
+        const emptyMsg = document.createElement("div");
+        emptyMsg.classList.add("text-muted", "small", "mt-2");
+        emptyMsg.textContent = "No subcategories available.";
+        subCategoryContainer.appendChild(emptyMsg);
+      }
+    }
+
+    function fetchAndRender(categoriesToLoad) {
+      if (categoriesToLoad.length === 0) {
+        renderSubCategories();
+        return;
+      }
+
+      fetch(`${baseUrl}?category_ids=${categoriesToLoad.join(",")}`)
+        .then((res) => res.json())
+        .then((data) => {
+          // 🔄 Reset az új értékekre
+          categoriesToLoad.forEach(catId => {
+            loadedSubCategories[catId] = [];
+          });
+
+          data.forEach((subCat) => {
+            if (!loadedSubCategories[subCat.category_id]) {
+              loadedSubCategories[subCat.category_id] = [];
+            }
+
+            const alreadyExists = loadedSubCategories[subCat.category_id].some(sc => sc.id === subCat.id);
+            if (!alreadyExists) {
+              loadedSubCategories[subCat.category_id].push(subCat);
+            }
+          });
+
+          renderSubCategories();
+        });
+    }
+
+    categoryCheckboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", function () {
+        const catId = parseInt(checkbox.value);
+
+        if (checkbox.checked) {
+          activeCategories.add(catId);
+          fetchAndRender([catId]);
+        } else {
+          activeCategories.delete(catId);
+          delete loadedSubCategories[catId];
+          renderSubCategories();
+        }
+      });
+    });
+
+    // 🔁 Inicializálás
+    const initialChecked = Array.from(categoryCheckboxes)
+      .filter(cb => cb.checked)
+      .map(cb => parseInt(cb.value));
+
+    initialChecked.forEach(id => activeCategories.add(id));
+    fetchAndRender(initialChecked);
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const filterForm = document.getElementById('filterForm');
+    const badgeContainer = document.getElementById('active-filters');
+
+    function truncateText(text, maxLength = 12) {
+      return text.length > maxLength ? text.slice(0, maxLength) + '…' : text;
+    }
+
+    function updateBadges() {
+      badgeContainer.innerHTML = '';
+
+      const checkedInputs = filterForm.querySelectorAll('input[type="checkbox"]:checked');
+
+      checkedInputs.forEach(input => {
+        const label = filterForm.querySelector('label[for="' + input.id + '"]');
+        const labelText = label ? label.textContent.trim() : input.value;
+
+        const li = document.createElement('li');
+        li.className = 'list-inline-item mb-1';
+
+        const badge = document.createElement('span');
+        badge.className = 'badge bg-primary rounded-pill px-2 py-1 d-inline-flex align-items-center';
+        badge.innerHTML = `
+          ${truncateText(labelText)}
+          <button type="button" class="btn-close btn-close-white ms-1" aria-label="Remove"></button>
+        `;
+
+        badge.querySelector('button').addEventListener('click', function () {
+          input.checked = false;
+          updateBadges();
+        });
+
+        li.appendChild(badge);
+        badgeContainer.appendChild(li);
+      });
+
+      // if (checkedInputs.length > 0) {
+      //   const li = document.createElement('li');
+      //   li.className = 'list-inline-item mb-1';
+
+      //   const searchBtn = document.createElement('button');
+      //   searchBtn.type = 'button'; // <- Nem 'submit', hogy ne default submit legyen
+      //   searchBtn.className = 'btn btn-outline-primary btn-sm fw-bold';
+      //   searchBtn.innerHTML = '<em class="icon ni ni-search me-1"></em> Apply Filter';
+
+      //   searchBtn.addEventListener('click', () => {
+      //     filterForm.submit(); // <<< Itt submitoljuk programból
+      //   });
+
+      //   li.appendChild(searchBtn);
+      //   badgeContainer.appendChild(li);
+      // }
+    }
+
+    filterForm.querySelectorAll('input[type="checkbox"]').forEach(input => {
+      input.addEventListener('change', updateBadges);
+    });
+
+    updateBadges();
+  });
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} {{ block.super }} {% endblock %}
+
+{% block aside %}
+{% include 'aside/aside_dashboard.html' with user_type=request.user.user_type %}
+{% endblock %}
+
+{% block content %}
+
+
+<div class="nk-content-wrap">
+  {% include 'dashboard/header_dashboard.html' %}
+  <div class="nk-block">
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="nk-block">
+          <div class="nk-block-head">
+            <div class="nk-block-between">
+              <div class="nk-block-head-content">
+                <h5 class="title">Blocked companies</h5>
+                <p>These companies listed here are blocked from viewing your profile. So they cannot view your profile. </p>
+              </div>
+
+              <div class="nk-block-head-content">
+                <a href="{% url 'edit_blocked_company' %}"
+                  class="btn btn-outline-light bg-white d-none d-sm-inline-flex"><em
+                    class="icon ni ni-plus"></em><span>Add company</span></a>
+                <a href="{% url 'edit_blocked_company' %}"
+                  class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none"><em
+                    class="icon ni ni-plus"></em></a>
+              </div>
+            </div>
+
+          </div>
+
+          <table id="blocked-companies-table" class="datatable-init nowrap table dataTable dtr-inline collapsed" data-auto-responsive="true">
+            <thead>
+              <tr>
+                <th></th>
+                <th data-priority="1">Company Name</th>
+                <th data-priority="2" class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for company in blocked_companies %}
+                {% if company.profile %}
+                  <tr class="align-middle">
+                    <td></td>
+                    <td>{{ company.profile }}</td>
+
+                    <!-- <td class="text-end">
+                      <div class="dropdown">
+                        <a class="dropdown-toggle btn btn-icon btn-trigger text-soft" data-bs-toggle="dropdown">
+                          <em class="icon ni ni-more-h"></em>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
+                          <ul class="link-list-plain">
+                            <li><a href="{{ job.get_absolute_url }}">View</a></li>
+                            <li><a href="{% url 'job_edit' slug=job.slug %}">Edit</a></li>
+                            <li><a href="{% url 'job_delete' slug=job.slug %}" class="text-danger">Remove</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td> -->
+
+                    <td class="text-end">
+                      <form action="{% url 'delete_blocked_company' company.id %}" method="post" class="d-inline delete-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger delete-btn">
+                          <em class="icon ni ni-trash"></em>
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

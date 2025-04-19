@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %} {{ block.super }} | Payment Cancelled {% endblock %}
+
+{% block aside %}
+{% include 'aside/aside_dashboard.html' with user_type=request.user.user_type %}
+{% endblock %}
+
+{% block content %}
+<div class="nk-content-wrap">
+  {% include 'dashboard/header_dashboard.html' %}
+
+  <div class="nk-block nk-block-lg">
+    <div class="card card-bordered">
+      <div class="card-inner card-inner-lg text-center">
+        <div class="nk-block-head-content">
+          <h3 class="title text-danger">❌ Payment Cancelled</h3>
+          <p class="lead">You cancelled the payment. Your job post was not boosted.</p>
+        </div>
+        <div class="mt-4">
+          <a href="{% url 'list_jobs' %}" class="btn btn-outline-secondary">
+            <em class="icon ni ni-arrow-left"></em> Back to My Jobs
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

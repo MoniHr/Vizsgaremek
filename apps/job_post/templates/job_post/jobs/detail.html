@@ -1,0 +1,525 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} {{ block.super }} {% endblock %}
+{% block content %}
+
+
+<div class="nk-content-wrap">
+  <div class="nk-block-head">
+    <div class="nk-block-between g-3">
+      <div class="nk-block-head-content d-flex align-items-center">
+        <div>
+          <h3 class="nk-block-title page-title"><strong class="text-primary small">{{job_post.title}}</strong></h3>
+          <div class="nk-block-des text-soft">
+            <ul class="list-inline">
+              <li>Last updated: <span class="text-base">{{ job_post.updated_at|date:"Y-m-d H:i:s" }}</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="nk-block-head-content">
+        <div class="nk-block-head-content">
+          {% if job_post.created_by != request.user %}
+          <a href="javascript:void(0);" class="btn btn-outline-light bg-white d-none d-sm-inline-flex wishlist-btn"
+            data-job-slug="{{ job_post.slug }}"
+            data-saved="{% if job_post in request.user.saved_jobs.all %}true{% else %}false{% endif %}">
+            <em class="icon ni ni-heart {% if job_post in request.user.saved_jobs.all %}text-danger{% endif %}"></em>
+            <span>{% if job_post in request.user.saved_jobs.all %}Saved{% else %}Save{% endif %}</span>
+          </a>
+
+          <a href="javascript:void(0);"
+            class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none wishlist-btn"
+            data-job-slug="{{ job_post.slug }}"
+            data-saved="{% if job_post in request.user.saved_jobs.all %}true{% else %}false{% endif %}">
+            <em class="icon ni ni-heart {% if job_post in request.user.saved_jobs.all %}text-danger{% endif %}"></em>
+          </a>
+
+          {% endif %}
+
+          {% if job_post.created_by != request.user %}
+          <a href="{% url 'job_apply' job_post.slug %}"
+            class="btn btn-outline-light bg-white d-none d-sm-inline-flex {% if is_apply_disabled %}disabled{% endif %}">
+            <em class="icon ni ni-hand"></em><span>Apply to Job</span>
+          </a>
+          <a href="{% url 'job_apply' job_post.slug %}"
+            class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none {% if is_apply_disabled %}disabled{% endif %}">
+            <em class="icon ni ni-hand"></em>
+          </a>
+        </div>
+        {% else %}
+        <a href="{% url 'job_edit' job_post.slug %}"
+          class="btn btn-outline-light bg-white d-none d-sm-inline-flex {% if is_apply_disabled %}disabled{% endif %}">
+          <em class="icon ni ni-edit"></em><span>Edit job</span>
+        </a>
+        <a href="{% url 'job_edit' job_post.slug %}"
+          class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none {% if is_apply_disabled %}disabled{% endif %}">
+          <em class="icon ni ni-edit"></em>
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+<div class="nk-block">
+  <div class="row g-gs">
+    <div class="col-12 col-lg-8">
+      {% if warning_message %}
+      <div class="alert alert-warning">
+        {{ warning_message }}
+        <div class="d-flex gap-2 mt-2">
+          {% for link in upload_links %}
+          <a href="{{ link.url }}" target="_blank" class="btn {{ link.class }}">{{ link.label }}</a>
+          {% endfor %}
+          <a href="javascript:location.reload();" class="btn btn-primary">Refresh</a>
+        </div>
+
+      </div>
+      {% endif %}
+
+      <div class="card card-bordered">
+        <div class="card-inner">
+          <div class="nk-block">
+            <div class="nk-block-head nk-block-head-line">
+              <h6 class="title overline-title text-base">Job Information</h6>
+            </div>
+            <div class="profile-ud-list" style="max-width: none;">
+
+              <div class="profile-ud-item">
+                <div class="profile-ud wider">
+                  <span class="profile-ud-label">Industry</span>
+                  <span class="profile-ud-value">{{ job_post.category|default:"-" }}</span>
+                </div>
+              </div>
+
+              <div class="profile-ud-item">
+                <div class="profile-ud wider">
+                  <span class="profile-ud-label">Sub Industry</span>
+                  <span class="profile-ud-value">{{ job_post.sub_category|default:"-" }}</span>
+                </div>
+              </div>
+
+              <div class="profile-ud-item">
+                <div class="profile-ud wider">
+                  <span class="profile-ud-label">Working time</span>
+                  <span class="profile-ud-value">
+                    {% if job_post.working_time.exists %}
+                    {{ job_post.working_time.all|join:", " }}
+                    {% else %}
+                    -
+                    {% endif %}
+                  </span>
+                </div>
+              </div>
+
+              <div class="profile-ud-item">
+                <div class="profile-ud wider">
+                  <span class="profile-ud-label">Work schedule</span>
+                  <span class="profile-ud-value">
+                    {% if job_post.work_schedule.exists %}
+                    {{ job_post.work_schedule.all|join:", " }}
+                    {% else %}
+                    -
+                    {% endif %}
+                  </span>
+                </div>
+              </div>
+
+              <div class="profile-ud-item">
+                <div class="profile-ud wider">
+                  <span class="profile-ud-label">Driving license</span>
+                  <span class="profile-ud-value">
+                    {% if job_post.driving_license.exists %}
+                    {{ job_post.driving_license.all|join:", " }}
+                    {% else %}
+                    -
+                    {% endif %}
+                  </span>
+                </div>
+              </div>
+
+              <div class="profile-ud-item">
+                <div class="profile-ud wider">
+                  <span class="profile-ud-label">Qualification</span>
+                  <span class="profile-ud-value">
+                    {% if job_post.educations.exists %}
+                    {{ job_post.educations.all|join:", " }}
+                    {% else %}
+                    -
+                    {% endif %}
+                  </span>
+                </div>
+              </div>
+
+              <div class="profile-ud-item">
+                <div class="profile-ud wider">
+                  <span class="profile-ud-label">Languages</span>
+                  <span class="profile-ud-value">
+                    {% if job_post.required_languages.exists %}
+                    <ul>
+                      {% for required_language in job_post.required_languages.all %}
+                      <li>{{ required_language.get_language_display }} - {{ required_language.get_level_display }}</li>
+                      {% endfor %}
+                    </ul>
+                    {% else %}
+                    -
+                    {% endif %}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="nk-divider divider md"></div>
+
+          {% if job_post.job_description %}
+          <div class="nk-block">
+            <div class="nk-block-head nk-block-head-line">
+              <h6 class="title overline-title text-base">Job Description</h6>
+            </div>
+            <p>{{ job_post.job_description | safe }}</p>
+          </div>
+          {% endif %}
+
+          <div class="nk-divider divider md"></div>
+
+          {% if job_post.expectations %}
+          <div class="nk-block">
+            <div class="nk-block-head nk-block-head-line">
+              <h6 class="title overline-title text-base">Required Knowledge, Skills, and Abilities</h6>
+            </div>
+            <p>{{ job_post.expectations | safe }}</p>
+          </div>
+          {% endif %}
+          <div class="nk-divider divider md"></div>
+
+          {% if job_post.advantages %}
+          <div class="nk-block">
+            <div class="nk-block-head nk-block-head-line">
+              <h6 class="title overline-title text-base">Advantages</h6>
+            </div>
+            <p>{{ job_post.advantages | safe }}</p>
+          </div>
+          {% endif %}
+
+          <div class="nk-divider divider md"></div>
+          {% if job_post.benefits %}
+          <div class="nk-block">
+            <div class="nk-block-head nk-block-head-line">
+              <h6 class="title overline-title text-base">Benefits</h6>
+            </div>
+            <p>{{ job_post.benefits | safe }}</p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      {% if company_jobs %}
+      <div class="nk-block-head">
+        <div class="nk-block-between">
+          <div class="nk-block-head-content">
+            <h5 class="title">Similar jobs from company</h5>
+            <p>Basic info, like your name and address, that you use on Nio Platform.</p>
+          </div>
+        </div>
+      </div>
+
+      {% for job_post in company_jobs %}
+      <div class="card card-bordered">
+        <div class="card-inner">
+          <div class="project">
+            <div class="project-head">
+              <a href="{% url 'job_detail' job_post.slug %}" class="project-title">
+                <div class="project-info">
+                  <h6 class="title">{{ job_post.title }}</h6>
+                  <span class="sub-text">
+                    {% if job_post.created_by.profile.company_logo %}
+                    {{ job_post.created_by.company.profile.company_name}}
+                    {% else %}
+                    {{ job_post.created_by.company.profile.public_name}}
+                    {% endif %}
+                  </span>
+                  <div>
+                    <em class="icon ni ni-folder"></em>
+                    <small>{{ job_post.category|default:"-" }} > {{ job_post.sub_category|default:"-" }}</small>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <div class="project-details mb-0">
+              <div>
+                <p>{{ job_post.job_description|truncatewords:20|striptags }}</p>
+              </div>
+              <div class="mt-2">
+
+                <span class="badge badge-dim bg-light text-gray me-1">
+                  <em class="icon ni ni-calendar me-1"></em>
+                  {% if job_post.working_time.exists %}
+                  {{ job_post.working_time.all|join:", " }}
+                  {% else %}
+                  -
+                  {% endif %}
+                </span>
+
+                <span class="badge badge-dim bg-light text-gray me-1">
+                  <em class="icon ni ni-clock me-1"></em>
+                  {% if job_post.work_schedule.exists %}
+                  {{ job_post.work_schedule.all|join:", " }}
+                  {% else %}
+                  -
+                  {% endif %}
+                </span>
+
+                {% if job_post.educations.exists %}
+                <span class="badge badge-dim bg-light text-gray me-1">
+                  <em class="icon ni ni-book me-1"></em>
+                  {{ job_post.educations.all|join:", " }}
+                </span>
+                {% else %}
+                <span class="badge badge-dim bg-light me-1">-</span>
+                {% endif %}
+              </div>
+
+              <div class="d-flex mt-1 justify-content-between align-items-center">
+                <small><em class="icon ni ni-map-pin"></em> {{ job_post.job_location|default:"-" }},
+                  {{ job_post.job_city|default:"-" }} • Last updated:
+                  {{job_post.updated_at}}</small>
+                <a href="{% url 'job_detail' job_post.slug %}" class="btn btn-sm btn-primary"><em
+                    class="icon ni ni-eye"></em></a>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      {% if similar_jobs %}
+      <div class="nk-block-head">
+        <div class="nk-block-between">
+          <div class="nk-block-head-content">
+            <h5 class="title">Similar jobs</h5>
+            <p>Basic info, like your name and address, that you use on Nio Platform.</p>
+          </div>
+        </div>
+      </div>
+
+
+      {% for job_post in similar_jobs %}
+      <div class="card card-bordered">
+        <div class="card-inner">
+          <div class="project">
+            <div class="project-head">
+              <a href="{% url 'job_detail' job_post.slug %}" class="project-title">
+                <div
+                  class="user-avatar lg sq me-3 {% if not job_post.created_by.profile.get_profile_image_url %}bg-primary{% endif %}"
+                  style="{% if job_post.created_by.profile.get_profile_image_url %}background: none;{% endif %}">
+                  {% if job_post.created_by.profile.get_profile_image_url %}
+                  <img src="{{ job_post.created_by.profile.get_profile_image_url }}" alt="Profile Image">
+                  {% else %}
+                  <span>NA</span>
+                  {% endif %}
+                </div>
+
+                <div class="project-info">
+                  <h6 class="title">{{ job_post.title }}</h6>
+                  <span class="sub-text">
+                    {% if job_post.created_by.profile.company_logo %}
+                    {{ job_post.created_by.company.profile.company_name}}
+                    {% else %}
+                    {{ job_post.created_by.company.profile.public_name}}
+                    {% endif %}
+                  </span>
+                  <div>
+                    <em class="icon ni ni-folder"></em>
+                    <small>{{ job_post.category|default:"-" }} > {{ job_post.sub_category|default:"-" }}</small>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <div class="project-details mb-0">
+              <div>
+                <p>{{ job_post.job_description|truncatewords:20|striptags }}</p>
+              </div>
+              <div class="mt-2">
+
+                <span class="badge badge-dim bg-light text-gray me-1">
+                  <em class="icon ni ni-calendar me-1"></em>
+                  {% if job_post.working_time.exists %}
+                  {{ job_post.working_time.all|join:", " }}
+                  {% else %}
+                  -
+                  {% endif %}
+                </span>
+
+                <span class="badge badge-dim bg-light text-gray me-1">
+                  <em class="icon ni ni-clock me-1"></em>
+                  {% if job_post.work_schedule.exists %}
+                  {{ job_post.work_schedule.all|join:", " }}
+                  {% else %}
+                  -
+                  {% endif %}
+                </span>
+
+                {% if job_post.educations.exists %}
+                <span class="badge badge-dim bg-light text-gray me-1">
+                  <em class="icon ni ni-book me-1"></em>
+                  {{ job_post.educations.all|join:", " }}
+                </span>
+                {% else %}
+                <span class="badge badge-dim bg-light me-1">-</span>
+                {% endif %}
+
+              </div>
+
+              <div class="d-flex mt-1 justify-content-between align-items-center">
+
+                <small><em class="icon ni ni-map-pin"></em> {{ job_post.job_location|default:"-" }}, {{
+                  job_post.job_city|default:"-" }} • Last updated:
+                  {{job_post.updated_at}}</small>
+                <a href="{% url 'job_detail' job_post.slug %}" class="btn btn-sm btn-primary"><em
+                    class="icon ni ni-eye"></em></a>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+    </div>
+    <div class="col-12 col-lg-4">
+      <div class="card card-bordered">
+        <div class="card-inner">
+          <div class="team">
+            <div class="user-card user-card-s2">
+              <div
+                class="user-avatar lg {% if not job_post.created_by.profile.get_profile_image_url %}bg-primary{% endif %}"
+                style="{% if job_post.created_by.profile.get_profile_image_url %}background: none;{% endif %}">
+                {% if job_post.created_by.profile.get_profile_image_url %}
+                <img src="{{ job_post.created_by.profile.get_profile_image_url }}" alt="Profile Image">
+                {% else %}
+                <em class="icon ni ni-user-alt"></em>
+                {% endif %}
+              </div>
+              <div class="user-info">
+                <h6>{{ job_post.created_by.profile }}</h6><span class="sub-text">
+                  {% if job_post.created_by.profile.activity %}
+                  {{job_post.created_by.profile.activity|default:"-"}}
+                  {% else %}
+                  {{job_post.created_by.profile.profession|default:"-"}}
+                  {% endif %}
+                </span>
+              </div>
+            </div>
+
+            <div class="team-view"><a href="{% url 'public_profile' job_post.created_by.profile.slug %}"
+                class="btn btn-block btn-dim btn-primary">
+                <span>View Profile</span>
+              </a>
+              </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="card card-bordered">
+        <div class="card-inner">
+
+          {% if job_post %}
+          <div class="nk-block">
+            <div class="nk-block-head nk-block-head-line">
+              <h6 class="title overline-title text-base">Contact</h6>
+            </div>
+
+            <form action="{% url 'send_email_job' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="id" value="{{ job_post.id }}">
+              {{ email_form|crispy }}
+              <input type="submit" class="btn btn-primary w-100" value="Send Email">
+            </form>
+
+            {% if job_post.created_by != request.user %}
+            <div class="nk-block-head-content mt-2">
+              <a href="{% url 'chat_create' job_post.created_by.id %}" class="btn btn-outline-light bg-white w-100">
+                <em class="icon ni ni-chat"></em>
+                <span>Start Message</span>
+              </a>
+
+            </div>
+            {% endif %}
+          </div>
+          {% endif %}
+
+          <div class="nk-divider divider md"></div>
+
+          <div class="nk-block">
+            <div class="nk-block-head nk-block-head-line">
+              <h6 class="title overline-title text-base">Location</h6>
+            </div>
+
+            {% if job_post.get_map_location %}
+            <iframe
+              src="https://www.google.com/maps/embed/v1/place?q={{ job_post.get_map_location|urlencode }}&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"
+              height="250" style="border:0;width:100%;" allowfullscreen>
+            </iframe>
+            {% else %}
+            <p class="text-muted">No location data available.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".wishlist-btn").forEach(function (button) {
+      button.addEventListener("click", function () {
+        const jobSlug = this.dataset.jobSlug;
+        const url = `{% url 'wishlist_toggle' job_slug='JOB_SLUG_PLACEHOLDER' %}`.replace("JOB_SLUG_PLACEHOLDER", jobSlug);
+        const isSaved = this.dataset.saved === "true";
+
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
+            "X-Requested-With": "XMLHttpRequest",
+          },
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.status === "success") {
+              document.querySelectorAll(`[data-job-slug='${jobSlug}']`).forEach(element => {
+                const icon = element.querySelector("em");
+                const textSpan = element.querySelector("span");
+
+                if (data.added) {
+                  icon.classList.add("text-danger");
+                  if (textSpan) textSpan.textContent = "Saved";
+                  element.dataset.saved = "true";
+                } else {
+                  icon.classList.remove("text-danger");
+                  if (textSpan) textSpan.textContent = "Save";
+                  element.dataset.saved = "false";
+                }
+              });
+            }
+          })
+          .catch(error => console.error("AJAX Error:", error));
+      });
+    });
+  });
+</script>
+
+
+{% endblock %}

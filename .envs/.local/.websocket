@@ -1,0 +1,9 @@
+# WebSocket szerver konfiguráció
+WEBSOCKET_SERVER_URL=ws://localhost:3001
+WEBSOCKET_PORT=3001
+WEBSOCKET_HOST=0.0.0.0
+
+# Redis kapcsolat
+REDIS_URL=redis://redis:6379
+
+

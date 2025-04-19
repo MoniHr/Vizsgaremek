@@ -1,0 +1,135 @@
+version: "3.8"
+
+volumes:
+  inter_hm_local_postgres_data: {}
+  inter_hm_local_postgres_data_backups: {}
+  local_logs: {}
+  redis_data: {}
+
+networks:
+  inter_hm_network:
+    name: inter_hm_network
+    driver: bridge
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./.compose/local/django/Dockerfile
+    image: inter_hm_local_django
+    container_name: inter_hm_local_django
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - redis
+      - websocket
+      - celery_worker
+    volumes:
+      - .:/app:z
+      - local_logs:/var/log/app
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+      - ./.envs/.local/.websocket
+    ports:
+      - "8000:8000"
+    networks:
+      - inter_hm_network
+    command: /start
+
+  websocket:
+    build:
+      context: ./websocket
+      dockerfile: ./Dockerfile
+    image: inter_hm_local_websocket
+    container_name: inter_hm_local_websocket
+    restart: unless-stopped
+    depends_on:
+      - redis
+    volumes:
+      - ./websocket:/app:z
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./.envs/.local/.websocket
+    networks:
+      inter_hm_network:
+        aliases:
+          - websocket
+    command: node /app/server.js
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./.compose/production/postgres/Dockerfile
+    image: inter_hm_production_postgres
+    container_name: inter_hm_local_postgres
+    restart: unless-stopped
+    volumes:
+      - inter_hm_local_postgres_data:/var/lib/postgresql/data
+      - inter_hm_local_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.local/.postgres
+    ports:
+      - "5435:5432"
+    networks:
+      - inter_hm_network
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "debug"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:6
+    container_name: inter_hm_local_redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - inter_hm_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+  celery_worker:
+    build:
+      context: .
+      dockerfile: ./.compose/local/celery/Dockerfile
+    container_name: inter_hm_celery_worker
+    restart: always
+    depends_on:
+      - redis
+      - postgres
+    volumes:
+      - .:/app:z
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.local
+    networks:
+      - inter_hm_network
+
+  celery_beat:
+    build:
+      context: .
+      dockerfile: ./.compose/local/celery/Dockerfile
+    container_name: inter_hm_celery_beat
+    restart: always
+    depends_on:
+      - redis
+    volumes:
+      - .:/app:z
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.local
+    command: celery -A config beat --loglevel=info
+    networks:
+      - inter_hm_network

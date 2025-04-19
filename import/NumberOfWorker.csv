@@ -1,0 +1,7 @@
+id,code,name
+1,0,No Employee
+2,1_10,1 to 10 employees
+3,11_20,11 to 20 employees
+4,21_50,21 to 50 employees
+5,51_100,51 to 100 employees
+6,100_PLUS,More than 100 employees

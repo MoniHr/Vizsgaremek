@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block aside %}
+{% include 'aside/aside_employee.html' with helper=helper filter=filter %}
+{% endblock %}
+
+{% block content %}
+<div class="nk-content-wrap">
+  <div class="nk-block">
+    <div class="row g-gs">
+
+      <div class="col-12">
+        <p>Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ page_obj.paginator.count }}</p>
+
+        <div class="filter-badge-scroll-wrapper">
+          <ul id="active-filters" class="list-inline mb-3"></ul>
+        </div>
+
+        {% for employee in page_obj %}
+        <div class="card card-bordered">
+          <div class="card-inner">
+            <div class="project">
+              <div class="project-head mb-0">
+                <a href="{{ employee.get_absolute_url }}" class="project-title">
+
+                  <div class="user-avatar lg sq {% if not employee.get_profile_image_url %}bg-primary{% endif %}"
+                    style="{% if employee.get_profile_image_url %}background: none;{% endif %}">
+                    {% if employee.get_profile_image_url %}
+                    <img src="{{ employee.get_profile_image_url }}" alt="Profile Image">
+                    {% else %}
+                    <span>NA</span>
+                    {% endif %}
+                  </div>
+                  <div class="project-info">
+                    <h5 class="title1">{{ employee.public_name }}</h5>
+                    <span class="sub-text">{{ employee.profile_location }} • {{ employee.profession }}</span>
+
+                    <div class="mt-1">
+                      <span class="badge badge-dim bg-light text-gray me-1">
+                        <em class="icon ni ni-calendar me-1"></em>
+                        {% if employee.working_time.exists %}
+                        {{ employee.working_time.all|join:", " }}
+                        {% else %}
+                        {% endif %}
+                      </span>
+
+                      <span class="badge badge-dim bg-light text-gray me-1">
+                        <em class="icon ni ni-clock me-1"></em>
+                        {% if employee.work_schedule.exists %}
+                        {{ employee.work_schedule.all|join:", " }}
+                        {% else %}
+                        {% endif %}
+                      </span>
+
+                      {% if employee.profile.languages_known.exists %}
+                      <span class="badge badge-dim bg-light text-gray me-1">
+                        <em class="icon ni ni-globe me-1"></em>
+                        {{ employee.profile.languages_known.all|join:", " }}
+                      </span>
+                      {% else %}
+                      {% endif %}
+
+                      <!-- {% if employee.educations.exists %}
+                      <span class="badge badge-dim bg-light text-gray me-1">
+                        <em class="icon ni ni-book me-1"></em>
+                        {{ employee.educations.all|join:", " }}
+                      </span>
+                      {% else %}
+                      {% endif %} -->
+
+                      {% if employee.driving_license.exists %}
+                      <span class="badge badge-dim bg-light text-gray me-1">
+                        <em class="icon ni ni-book me-1"></em>
+                        {{ employee.driving_license.all|join:", " }}
+                      </span>
+                      {% else %}
+                      {% endif %}
+
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+        <div class="col-12 mt-4">
+          {% include 'snippets/paginator.html' %}
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<style>
+  #div_id_profile_location,
+  #div_id_education,
+  #div_id_working_time,
+  #div_id_work_schedule,
+  #div_id_driving_license,
+  #div_id_required_language_knowledge_filter {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #DBDFEA;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #fff;
+  }
+
+  .filter-badge-scroll-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+
+  #active-filters::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  #active-filters::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+
+  #active-filters li {
+    margin-right: 0.5rem;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 991.98px) {
+    #filterButton {
+      position: fixed;
+      bottom: -8px;
+      left: 0;
+      width: 280px !important;
+      z-index: 1050;
+    }
+
+    @media (min-width: 576px) and (max-width: 991.98px) {
+      #filterButton {
+        width: 300px !important;
+      }
+    }
+
+  }
+</style>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const filterForm = document.getElementById('filterForm');
+    const badgeContainer = document.getElementById('active-filters');
+
+    function truncateText(text, maxLength = 12) {
+      return text.length > maxLength ? text.slice(0, maxLength) + '…' : text;
+    }
+
+    function updateBadges() {
+      badgeContainer.innerHTML = '';
+
+      const checkedInputs = filterForm.querySelectorAll('input[type="checkbox"]:checked');
+
+      checkedInputs.forEach(input => {
+        const label = filterForm.querySelector('label[for="' + input.id + '"]');
+        const labelText = label ? label.textContent.trim() : input.value;
+
+        const li = document.createElement('li');
+        li.className = 'list-inline-item mb-1';
+
+        const badge = document.createElement('span');
+        badge.className = 'badge bg-primary rounded-pill px-2 py-1 d-inline-flex align-items-center';
+        badge.innerHTML = `
+          ${truncateText(labelText)}
+          <button type="button" class="btn-close btn-close-white ms-1" aria-label="Remove"></button>
+        `;
+
+        badge.querySelector('button').addEventListener('click', function () {
+          input.checked = false;
+          updateBadges();
+        });
+
+        li.appendChild(badge);
+        badgeContainer.appendChild(li);
+      });
+
+      // if (checkedInputs.length > 0) {
+      //   const li = document.createElement('li');
+      //   li.className = 'list-inline-item mb-1';
+
+      //   const searchBtn = document.createElement('button');
+      //   searchBtn.type = 'button'; // <- Nem 'submit', hogy ne default submit legyen
+      //   searchBtn.className = 'btn btn-outline-primary btn-sm fw-bold';
+      //   searchBtn.innerHTML = '<em class="icon ni ni-search me-1"></em> Apply Filter';
+
+      //   searchBtn.addEventListener('click', () => {
+      //     filterForm.submit(); // <<< Itt submitoljuk programból
+      //   });
+
+      //   li.appendChild(searchBtn);
+      //   badgeContainer.appendChild(li);
+      // }
+    }
+
+    filterForm.querySelectorAll('input[type="checkbox"]').forEach(input => {
+      input.addEventListener('change', updateBadges);
+    });
+
+    updateBadges();
+  });
+</script>
+
+
+{% endblock %}

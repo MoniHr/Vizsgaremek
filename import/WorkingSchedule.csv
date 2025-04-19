@@ -1,0 +1,18 @@
+id,code,name
+1,CONTINUOUS_WORKING_TIME,Continuous Working Time
+2,FLEXIBLE,Flexible
+3,FOR_CHANGED_EMPLOYMENT_CAPACITY,For Changed Employment Capacity
+4,GENERAL_WORKING_SCHEDULE,General Working Schedule
+5,IN_PENSION,"In Pension, Work Next To Retired"
+6,MOTHERS_SINGLE_PARENTS,For Mothers And/or Single Parents
+7,OPTIONAL_WORKING_HOURS,Optional Working Hours
+8,SHIFT_2,2 Shifts
+9,SHIFT_3,3 Shifts
+10,SHIFT_12_24,12/24 Shift
+11,SHIFT_12_48,12/48 Shift
+12,SHIFT_24_72_STANDBY_SERVICE,"24/72 Shift, Standby Service"
+13,STUDENT_WORK,Student Work
+14,REMOTE_WORK,Remote Work
+15,HOME_OFFICE,Home Office
+16,ON_SITE,On-site
+17,HYBRID,Hybrid

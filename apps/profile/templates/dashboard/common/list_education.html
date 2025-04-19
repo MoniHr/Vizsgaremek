@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} {{ block.super }} {% endblock %}
+
+{% block aside %}
+{% include 'aside/aside_dashboard.html' with user_type=request.user.user_type %}
+{% endblock %}
+
+{% block content %}
+
+
+<div class="nk-content-wrap">
+  {% include 'dashboard/header_dashboard.html' %}
+  <div class="nk-block">
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="nk-block">
+          <div class="nk-block-between">
+            <div class="nk-block-head">
+              <h5 class="title">Eductaions</h5>
+              <p>All educations</p>
+            </div>
+            <div class="nk-block-head-content">
+              <a href="{% url 'create_education' %}" class="btn btn-outline-light bg-white d-none d-sm-inline-flex"><em
+                  class="icon ni ni-plus"></em><span>Add education</span></a>
+              <a href="{% url 'create_education' %}"
+                class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none"><em
+                  class="icon ni ni-plus"></em></a>
+            </div>
+          </div>
+
+          {% if user.profile.educations.exists %}
+          {% for education in user.profile.educations.all %}
+          <li class="timeline-item">
+            <div class="timeline-status bg-primary is-outline"></div>
+            <div class="timeline-date"> <h6 class="timeline-title">
+              {{ education.start_date }}
+              –
+              {% if education.in_progress %}
+              -
+              {% else %}
+              {{ education.end_date }}
+              {% endif %}
+            </h6>
+
+              <p>{{ education.field_of_study }}</p>
+              <p>{{ education.degree }}</p>
+              <p>{{ education.school }}</p>
+            </div>
+          </li>
+
+          {% endfor %}
+          {% else %}
+          <div class="alert alert-warning alert-icon"><em class="icon ni ni-alert-circle"></em>No education please add
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

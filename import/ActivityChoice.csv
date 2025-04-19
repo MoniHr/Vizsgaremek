@@ -1,0 +1,110 @@
+id,code,name
+1,AGRICULTURE_FORESTRY_FISHING,"Agriculture, Forestry and Fishing"
+2,MINING_QUARRYING,Mining and Quarrying
+3,MANUFACTURING,Manufacturing
+4,ELECTRICITY_GAS_STEAM,"Electricity, Gas, Steam and Air Conditioning Supply"
+5,WATER_SUPPLY_WASTE_MANAGEMENT,"Water Supply; Sewerage, Waste Management and Remediation Activities"
+6,CONSTRUCTION,Construction
+7,WHOLESALE_RETAIL_TRADE,Wholesale and Retail Trade; Repair of Motor Vehicles and Motorcycles
+8,TRANSPORTATION_STORAGE,Transportation and Storage
+9,ACCOMMODATION_FOOD_SERVICE,Accommodation and Food Service Activities
+10,INFORMATION_COMMUNICATION,Information and Communication
+11,FINANCIAL_INSURANCE_ACTIVITIES,Financial and Insurance Activities
+12,REAL_ESTATE_ACTIVITIES,Real Estate Activities
+13,PROFESSIONAL_SCIENTIFIC_TECHNICAL,"Professional, Scientific and Technical Activities"
+14,ADMINISTRATIVE_SUPPORT_SERVICE,Administrative and Support Service Activities
+15,PUBLIC_ADMINISTRATION_DEFENCE,Public Administration and Defence; Compulsory Social Security
+16,EDUCATION,Education
+17,HUMAN_HEALTH_SOCIAL_WORK,Human Health and Social Work Activities
+18,ARTS_ENTERTAINMENT_RECREATION,"Arts, Entertainment and Recreation"
+19,OTHER_SERVICE_ACTIVITIES,Other Service Activities
+20,HOUSEHOLDS_AS_EMPLOYERS,Activities of Households as Employers; Undifferentiated Goods- and Services-Producing Activities of Households for Own Use
+21,EXTRATERRITORIAL_ORGANIZATIONS,Activities of Extraterritorial Organizations and Bodies
+1,CROP_AND_ANIMAL_PRODUCTION,"Crop and animal production, hunting and related service activities"
+2,FORESTRY_AND_LOGGING,Forestry and logging
+3,FISHING_AND_AQUACULTURE,Fishing and aquaculture
+4,MINING_OF_COAL_AND_LIGNITE,Mining of coal and lignite
+5,EXTRACTION_OF_CRUDE_PETROLEUM,Extraction of crude petroleum and natural gas
+6,MINING_OF_METAL_ORES,Mining of metal ores
+7,OTHER_MINING_AND_QUARRYING,Other mining and quarrying
+8,MINING_SUPPORT_SERVICE,Mining support service activities
+9,MANUFACTURE_OF_FOOD_PRODUCTS,Manufacture of food products
+10,MANUFACTURE_OF_BEVERAGES,Manufacture of beverages
+11,MANUFACTURE_OF_TOBACCO_PRODUCTS,Manufacture of tobacco products
+12,MANUFACTURE_OF_TEXTILES,Manufacture of textiles
+13,MANUFACTURE_OF_WEARING_APPAREL,Manufacture of wearing apparel
+14,MANUFACTURE_OF_LEATHER_PRODUCTS,Manufacture of leather and related products
+15,MANUFACTURE_OF_WOOD_PRODUCTS,"Manufacture of wood and of products of wood and cork, except furniture"
+16,MANUFACTURE_OF_PAPER_PRODUCTS,Manufacture of paper and paper products
+17,PRINTING_AND_REPRODUCTION_MEDIA,Printing and reproduction of recorded media
+18,MANUFACTURE_OF_COKE_REFINED_PETROLEUM,Manufacture of coke and refined petroleum products
+19,MANUFACTURE_OF_CHEMICAL_PRODUCTS,Manufacture of chemicals and chemical products
+20,MANUFACTURE_OF_PHARMACEUTICAL_PRODUCTS,Manufacture of basic pharmaceutical products and pharmaceutical preparations
+21,MANUFACTURE_OF_RUBBER_PLASTIC_PRODUCTS,Manufacture of rubber and plastic products
+22,MANUFACTURE_OF_NON_METALLIC_MINERAL_PRODUCTS,Manufacture of other non-metallic mineral products
+23,MANUFACTURE_OF_BASIC_METALS,Manufacture of basic metals
+24,MANUFACTURE_OF_FABRICATED_METAL_PRODUCTS,"Manufacture of fabricated metal products, except machinery and equipment"
+25,MANUFACTURE_OF_COMPUTER_ELECTRONIC_PRODUCTS,"Manufacture of computer, electronic and optical products"
+26,MANUFACTURE_OF_ELECTRICAL_EQUIPMENT,Manufacture of electrical equipment
+27,MANUFACTURE_OF_MACHINERY_EQUIPMENT,Manufacture of machinery and equipment n.e.c.
+28,MANUFACTURE_OF_MOTOR_VEHICLES,"Manufacture of motor vehicles, trailers and semi-trailers"
+29,MANUFACTURE_OF_OTHER_TRANSPORT_EQUIPMENT,Manufacture of other transport equipment
+30,MANUFACTURE_OF_FURNITURE,Manufacture of furniture
+31,OTHER_MANUFACTURING,Other manufacturing
+32,REPAIR_INSTALLATION_MACHINERY_EQUIPMENT,Repair and installation of machinery and equipment
+33,ELECTRICITY_GAS_STEAM,"Electricity, gas, steam and air conditioning supply"
+34,WATER_COLLECTION_TREATMENT_SUPPLY,"Water collection, treatment and supply"
+35,SEWERAGE,Sewerage
+36,WASTE_MANAGEMENT,"Waste collection, treatment and disposal activities; materials recovery"
+37,REMEDIATION_ACTIVITIES,Remediation activities and other waste management services
+38,CONSTRUCTION_BUILDINGS,Construction of buildings
+39,CIVIL_ENGINEERING,Civil engineering
+40,SPECIALIZED_CONSTRUCTION_ACTIVITIES,Specialized construction activities
+41,WHOLESALE_RETAIL_MOTOR_VEHICLES,Wholesale and retail trade and repair of motor vehicles and motorcycles
+42,WHOLESALE_TRADE,"Wholesale trade, except of motor vehicles and motorcycles"
+43,RETAIL_TRADE,"Retail trade, except of motor vehicles and motorcycles"
+44,LAND_TRANSPORT_PIPELINES,Land transport and transport via pipelines
+45,WATER_TRANSPORT,Water transport
+46,AIR_TRANSPORT,Air transport
+47,WAREHOUSING_SUPPORT_ACTIVITIES,Warehousing and support activities for transportation
+48,POSTAL_COURIER_ACTIVITIES,Postal and courier activities
+49,ACCOMMODATION,Accommodation
+50,FOOD_BEVERAGE_SERVICE,Food and beverage service activities
+51,PUBLISHING_ACTIVITIES,Publishing activities
+52,MOTION_PICTURE_PRODUCTION,"Motion picture, video and television programme production, sound recording and music publishing activities"
+53,BROADCASTING_ACTIVITIES,Programming and broadcasting activities
+54,TELECOMMUNICATIONS,Telecommunications
+55,COMPUTER_PROGRAMMING_CONSULTANCY,"Computer programming, consultancy and related activities"
+56,INFORMATION_SERVICE_ACTIVITIES,Information service activities
+57,FINANCIAL_SERVICE_ACTIVITIES,"Financial service activities, except insurance and pension funding"
+58,INSURANCE_ACTIVITIES,"Insurance, reinsurance and pension funding, except compulsory social security"
+59,AUXILIARY_FINANCIAL_INSURANCE_ACTIVITIES,Activities auxiliary to financial services and insurance activities
+60,REAL_ESTATE_ACTIVITIES,Real estate activities
+61,LEGAL_ACCOUNTING_ACTIVITIES,Legal and accounting activities
+62,HEAD_OFFICES_MANAGEMENT_CONSULTANCY,Activities of head offices; management consultancy activities
+63,ARCHITECTURAL_ENGINEERING_ACTIVITIES,Architectural and engineering activities; technical testing and analysis
+64,SCIENTIFIC_RESEARCH_DEVELOPMENT,Scientific research and development
+65,ADVERTISING_MARKET_RESEARCH,Advertising and market research
+66,OTHER_PROFESSIONAL_ACTIVITIES,"Other professional, scientific and technical activities"
+67,VETERINARY_ACTIVITIES,Veterinary activities
+68,RENTAL_LEASING_ACTIVITIES,Rental and leasing activities
+69,EMPLOYMENT_ACTIVITIES,Employment activities
+70,TRAVEL_AGENCY_ACTIVITIES,"Travel agency, tour operator and other reservation service and related activities"
+71,SECURITY_INVESTIGATION_ACTIVITIES,Security and investigation activities
+72,BUILDINGS_LANDSCAPE_ACTIVITIES,Services to buildings and landscape activities
+73,OFFICE_ADMINISTRATIVE_ACTIVITIES,"Office administrative, office support and other business support activities"
+74,PUBLIC_ADMINISTRATION_DEFENCE,Public administration and defence; compulsory social security
+75,EDUCATION,Education
+76,HUMAN_HEALTH_ACTIVITIES,Human health activities
+77,RESIDENTIAL_CARE_ACTIVITIES,Residential care activities
+78,SOCIAL_WORK_ACTIVITIES,Social work activities without accommodation
+79,CREATIVE_ARTS_ENTERTAINMENT,"Creative, arts and entertainment activities"
+80,LIBRARIES_ARCHIVES_MUSEUMS,"Libraries, archives, museums and other cultural activities"
+81,GAMBLING_BETTING_ACTIVITIES,Gambling and betting activities
+82,SPORTS_RECREATION_ACTIVITIES,Sports activities and amusement and recreation activities
+83,MEMBERSHIP_ORGANIZATIONS_ACTIVITIES,Activities of membership organizations
+84,REPAIR_COMPUTERS_HOUSEHOLD_GOODS,Repair of computers and personal and household goods
+85,OTHER_PERSONAL_SERVICE_ACTIVITIES,Other personal service activities
+86,HOUSEHOLDS_AS_EMPLOYERS,Activities of households as employers of domestic personnel
+87,UNDIFFERENTIATED_GOODS_SERVICES,Undifferentiated goods- and services-producing activities of private households for own use
+88,EXTRATERRITORIAL_ORGANIZATIONS,Activities of extraterritorial organizations and bodies

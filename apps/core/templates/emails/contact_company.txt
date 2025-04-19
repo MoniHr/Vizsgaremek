@@ -1,0 +1,15 @@
+Dear {{ profile.company_name|default:"Company Representative" }},
+
+You have received a new contact message via InterHRM.
+
+Sender Details:
+Name: {{ sender_name }}
+Email: {{ sender_email }}
+
+Message:
+{{ message }}
+
+Please feel free to reply directly to the sender.
+
+Best regards,  
+The InterHRM Team

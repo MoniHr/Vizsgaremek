@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} {{ block.super }} {% endblock %}
+
+{% block aside %}
+{% include 'aside/aside_dashboard.html' with user_type=request.user.user_type %}
+{% endblock %}
+
+{% block content %}
+
+<div class="nk-content-wrap">
+  {% include 'dashboard/header_dashboard.html' %}
+  <div class="nk-block">
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="nk-block">
+          <div class="nk-block-between">
+            <div class="nk-block-head">
+              <h5 class="title">Blocked companies</h5>
+              <p>These companies listed here are blocked from viewing your profile. So they cannot view your profile.
+              </p>
+            </div>
+            <div class="nk-block-head-content">
+              <a href="{% url 'list_blocked_company' %}"
+                class="btn btn-outline-light bg-white d-none d-sm-inline-flex"><em
+                  class="icon ni ni-arrow-left"></em><span>Back</span></a>
+              <a href="{% url 'list_blocked_company' %}"
+                class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none"><em
+                  class="icon ni ni-arrow-left"></em></a>
+            </div>
+          </div>
+
+          <form action="" method="post" enctype="multipart/form-data" autocomplete="off">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% crispy form %}
+            <div class="mb-3 mt-3">
+              <div class="">
+                <input type="submit" name="submit" value="Add Company" class="btn btn-primary w-100"
+                  id="submit-id-submit">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

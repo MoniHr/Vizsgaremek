@@ -1,0 +1,58 @@
+<div class="nk-aside" data-content="sideNav" data-toggle-overlay="true" data-toggle-screen="lg" data-toggle-body="true"
+  style="width: 350px;">
+  <div class="nk-sidebar-menu" data-simplebar>
+    <div class="nk-chat-list mt-0">
+      <h6 class="title overline-title-alt">Messages</h6>
+
+      <ul class="chat-list">
+        {% for room in chat_rooms %}
+        <li class="chat-item {% if room.unread_count > 0 %}is-unread{% endif %}" data-room-id="{{ room.id }}">
+          <a class="chat-link chat-open" href="{% url 'chat' %}?room={{ room.id }}">
+
+            <div
+              class="chat-media user-avatar{% if not room.other_user.profile.get_profile_image_url %} bg-primary{% endif %}"
+              style="{% if room.other_user.profile.get_profile_image_url %}background: none;{% endif %}">
+              {% if room.other_user.profile.get_profile_image_url %}
+              <img src="{{ room.other_user.profile.get_profile_image_url }}" alt="Profile Image">
+              {% else %}
+              <em class="icon ni ni-user-alt"></em>
+              {% endif %}
+            </div>
+
+            <div class="chat-info">
+              <div class="chat-from">
+                <div class="name">{{ room.other_user.profile.display_name|default:room.other_user.username }}</div>
+                <span class="time">
+                  {% if room.last_message_time %}
+                  {{ room.last_message_time|timesince }} ago
+                  {% else %}
+                  Just now
+                  {% endif %}
+                </span>
+              </div>
+              <div class="chat-context">
+                <div class="text">
+                  <p>{{ room.last_message|default:"No messages yet."|truncatechars:30 }}</p>
+                </div>
+                {% if room.unread_count > 0 %}
+                <div class="status unread">
+                  <em class="icon ni ni-bullet-fill"></em>
+                </div>
+                {% endif %}
+
+              </div>
+            </div>
+          </a>
+        </li>
+        {% empty %}
+        <li class="chat-item">
+          <div class="text-muted px-3 py-2">No conversations yet.</div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="nk-aside-close">
+    <a href="#" class="toggle" data-target="sideNav"><em class="icon ni ni-cross"></em></a>
+  </div>
+</div>

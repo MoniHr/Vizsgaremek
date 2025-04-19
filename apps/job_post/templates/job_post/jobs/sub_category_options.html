@@ -1,0 +1,5 @@
+<select name="sub_category" id="id_sub_category">
+  {% for subcategory in sub_categories %}
+      <option value="{{ subcategory.id }}" {% if subcategory.id == selected_subcategory_id %}selected{% endif %}>{{ subcategory.name }}</option>
+  {% endfor %}
+</select>

@@ -1,0 +1,11 @@
+<div class="widget {{ dropdown.name|slugify }}">
+  <div class="widget-title widget-collapse">
+    <h6>{{ dropdown.name }}</h6>
+    <a class="ms-auto" data-bs-toggle="collapse" href="#{{ dropdown.name|slugify }}" role="button" aria-expanded="false"
+       aria-controls="{{ dropdown.name|slugify }}"> <i class="fas fa-chevron-down"></i> </a></div>
+  <div class="collapse show" id="{{ dropdown.name|slugify }}">
+    <div class="widget-content">
+      {{ fields|safe }}
+    </div>
+  </div>
+</div>

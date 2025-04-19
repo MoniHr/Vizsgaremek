@@ -1,0 +1,13 @@
+<div class="nk-block">
+  <div class="nk-block-head nk-block-head-line">
+    <h6 class="title overline-title text-base">Location</h6>
+  </div>
+  {% if profile.get_full_address %}
+  <iframe
+    src="https://www.google.com/maps/embed/v1/place?q={{ profile.get_full_address|urlencode }}&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"
+    height="250" style="border:0;width:100%;" allowfullscreen>
+  </iframe>
+  {% else %}
+  <p class="text-muted">No location data available.</p>
+  {% endif %}
+</div>
